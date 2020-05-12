@@ -13,10 +13,18 @@ mpmath.mp.dps = 16
 np.random.seed(211)
 random.seed(211)
 
-def DX30_change_Cstar_d(parvals, f):
-    """ define DX30 Generalized Battery model ....
-    Change cstar_d
-    """
+def diffcylim(w, Rd, Cd):
+    """ diffcylim Rd Cd """
+    ret_sqrt = np.sqrt(Rd * np.multiply(1j*w, Cd))
+
+    ret_mp = [Rd * mpmath.besseli(0, x) /  (x * mpmath.besseli(1, x)) for x in ret_sqrt]
+    
+    z_ret = np.array(ret_mp, dtype=np.complex128)
+    return z_ret
+
+def Barsoukov_Pham_Lee_1(parvals, f):
+    """ Barsoukov-Pham-Lee #1D """
+
     omegas = 2 * np.pi * np.array(f)
 
     Rm = parvals['rm']
@@ -30,30 +38,21 @@ def DX30_change_Cstar_d(parvals, f):
     Cdl_HNU = parvals['cdl_hnu']
 
     Cd_C0 = parvals['cd_c0']
-    Cd_Cs = parvals['cd_cs']
-    DE6_d_R = parvals['de6_d_r']
-    DE6_d_T = parvals['de6_d_t']
-    DE6_d_P = parvals['de6_d_p']
-    DE6_d_U = parvals['de6_d_u']
-
+    Cd_HNC = parvals['cd_hnc']
+    Cd_HNT = parvals['cd_hnt']
+    Cd_HNP = parvals['cd_hnp']
+    Cd_HNU = parvals['cd_hnu']
     CPE_B_T = parvals['cpe_b_t']
     CPE_B_P = parvals['cpe_b_p']
 
-    # Change cstar_d in here
-    Zstar_d = np.divide(1.0, 1j * omegas * Cd_C0 + np.divide(1.0, np.divide(DE6_d_R, np.power(1 + np.power(1j * omegas * DE6_d_T, DE6_d_U), DE6_d_P)) + np.divide(1.0, 1j*omegas*Cd_Cs)))
-    Cstar_d = np.divide(1.0, np.multiply(1j * omegas, Zstar_d))
-
+    Cstar_d = Cd_C0 + Cd_HNC / ((1 + (1j * omegas * Cd_HNT) ** Cd_HNU) ** Cd_HNP)
     Cstar_dl = Cdl_C0 + Cdl_HNC / ((1 + (1j * omegas * Cdl_HNT) ** Cdl_HNU) ** Cdl_HNP)
     Cstar_B = CPE_B_T * ((1j * omegas) ** (CPE_B_P - 1))
 
-    tanh_sqrt = np.sqrt(3 * Rd * (1j * omegas * Cstar_d))
-    tanh_values = (1+0j)*np.ones(tanh_sqrt.shape, dtype=np.complex64)
-    tanh_values[np.real(tanh_sqrt) < 100] = np.tanh(tanh_sqrt[np.real(tanh_sqrt) < 100])
+    Zd_numerator = np.sqrt(Rd / (1j*np.multiply(omegas, Cstar_d)))
+    Zd_denominator = np.tanh(np.sqrt(Rd*1j * np.multiply(omegas, Cstar_d)))
 
-    #Zd = np.tanh(np.sqrt(3 * Rd * (1j * omegas * Cstar_d))) / (
-    #        np.sqrt(3 * 1j * omegas * Cstar_d / Rd) - (1 / Rd) * np.tanh(np.sqrt(3 * Rd * 1j * omegas * Cstar_d)))
-    Zd = tanh_values / (
-           np.sqrt(3 * 1j * omegas * Cstar_d / Rd) - (1 / Rd) * tanh_values)
+    Zd = np.divide(Zd_numerator, Zd_denominator)
 
     Zs = Rm
     Y_P = (1j * omegas * Cstar_dl) + 1.0 / (Rct + Zd)
@@ -64,54 +63,111 @@ def DX30_change_Cstar_d(parvals, f):
 
     return Z
     
-def LR_DX30(parvals, f, T=None, Voltage=None, c_case=1):
+def Barsoukov_Pham_Lee_2(parvals, f):
+    """ 
+    Barsoukov-Pham-Lee #2D
+    """
+    #co factor 2trong Cd, 2 trong Ci
+    omegas = 2 * np.pi * np.array(f)
 
-    fit_zrzi = DX30_change_Cstar_d(parvals, f)
+    Rm = parvals['rm']
+    Rct = parvals['rct']
+    Rd = parvals['rd']
 
-    # Add L1, DE1, R1
+    Cdl_C0 = parvals['cdl_c0']
+    Cdl_HNC = parvals['cdl_hnc']
+    Cdl_HNT = parvals['cdl_hnt']
+    Cdl_HNP = parvals['cdl_hnp']
+    Cdl_HNU = parvals['cdl_hnu']
+
+    Cd_C0 = parvals['cd_c0']
+    Cd_HNC = parvals['cd_hnc']
+    Cd_HNT = parvals['cd_hnt']
+    Cd_HNP = parvals['cd_hnp']
+    Cd_HNU = parvals['cd_hnu']
+    CPE_B_T = parvals['cpe_b_t']
+    CPE_B_P = parvals['cpe_b_p']
+
+    Cstar_d = Cd_C0 + (2*(Cd_HNC + Cd_C0)- Cd_C0)/ ((1 + (1j * omegas * Cd_HNT) ** Cd_HNU) ** Cd_HNP)
+    Cstar_dl = Cdl_C0 + Cdl_HNC / ((1 + (1j * omegas * Cdl_HNT) ** Cdl_HNU) ** Cdl_HNP)
+    Cstar_B = CPE_B_T * ((1j * omegas) ** (CPE_B_P - 1))
+
+    Zd = diffcylim(omegas, Rd, Cstar_d)
+
+    Zs = Rm
+    Y_P = (1j * omegas * Cstar_dl) + 1.0 / (Rct + Zd)
+    Z_B = 1.0 / (1j * omegas * Cstar_B)
+
+    Z = (1 + Z_B * np.sqrt(Y_P / Zs) * (1.0 / np.tanh(np.sqrt(Zs * Y_P)))) / (
+            Z_B * Y_P / Zs + np.sqrt(Y_P / Zs) * (1.0 / np.tanh(np.sqrt(Zs * Y_P))))
+
+    return Z
+
+def Barsoukov_Pham_Lee_3(parvals, f):
+    """ 
+    Barsoukov-Pham-Lee #3D
+    """
+    #co factor 3 trong Cd, 3 trong Ci
+    omegas = 2 * np.pi * np.array(f)
+
+    Rm = parvals['rm']
+    Rct = parvals['rct']
+    Rd = parvals['rd']
+
+    Cdl_C0 = parvals['cdl_c0']
+    Cdl_HNC = parvals['cdl_hnc']
+    Cdl_HNT = parvals['cdl_hnt']
+    Cdl_HNP = parvals['cdl_hnp']
+    Cdl_HNU = parvals['cdl_hnu']
+
+    Cd_C0 = parvals['cd_c0']
+    Cd_HNC = parvals['cd_hnc']
+    Cd_HNT = parvals['cd_hnt']
+    Cd_HNP = parvals['cd_hnp']
+    Cd_HNU = parvals['cd_hnu']
+    CPE_B_T = parvals['cpe_b_t']
+    CPE_B_P = parvals['cpe_b_p']
+
+    Cstar_d = Cd_C0 + (3*(Cd_HNC + Cd_C0)- Cd_C0) / ((1 + (1j * omegas * Cd_HNT) ** Cd_HNU) ** Cd_HNP)
+    Cstar_dl = Cdl_C0 + Cdl_HNC / ((1 + (1j * omegas * Cdl_HNT) ** Cdl_HNU) ** Cdl_HNP)
+    Cstar_B = CPE_B_T * ((1j * omegas) ** (CPE_B_P - 1))
+
+    tanh_sqrt = np.sqrt(Rd * (1j * omegas * Cstar_d))
+    tanh_values = (1+0j)*np.ones(tanh_sqrt.shape, dtype=np.complex64)
+    tanh_values[np.real(tanh_sqrt) < 100] = np.tanh(tanh_sqrt[np.real(tanh_sqrt) < 100])
+
+    Zd = tanh_values / (
+           np.sqrt(1j * omegas * Cstar_d / Rd) - (1 / Rd) * tanh_values)
+
+    Zs = Rm
+    Y_P = (1j * omegas * Cstar_dl) + 1.0 / (Rct + Zd)
+    Z_B = 1.0 / (1j * omegas * Cstar_B)
+
+    Z = (1 + Z_B * np.sqrt(Y_P / Zs) * (1.0 / np.tanh(np.sqrt(Zs * Y_P)))) / (
+            Z_B * Y_P / Zs + np.sqrt(Y_P / Zs) * (1.0 / np.tanh(np.sqrt(Zs * Y_P))))
+
+    return Z
+
+
+def Barsoukov_Pham_Lee(parvals, f, T=None, Voltage=None, c_case=5):
+
+    if c_case == 5:
+        fit_zrzi = Barsoukov_Pham_Lee_1(parvals, f)
+    elif c_case == 6:
+        fit_zrzi = Barsoukov_Pham_Lee_2(parvals, f)
+    elif c_case == 7:
+        fit_zrzi = Barsoukov_Pham_Lee_3(parvals, f)
+    else:
+        print('Undefined')
+
     L = parvals['l']
     R = parvals['r']
     R_OHM = parvals['r_ohm']
     Z_L = 1j * 2 * np.pi * f * L
-    # End of L1, DE1, R1
 
     fit_zrzi = 1 / ((1 / Z_L) + (1 / R)) + R_OHM + fit_zrzi
 
     return fit_zrzi
-
-
-def Phy_EIS(parvals, f, T=None, Voltage=None, c_case=3):
-    """
-    Full cell dx22 dx30
-    c_case = 3 => DX30_change_Cstar_d
-    """
-    DX22_T2 = parvals['dx22_t2']
-    DX22_P2 = parvals['dx22_p2']
-    DX22_R2 = parvals['dx22_r2']
-    
-    DX22_T3 = parvals['dx22_t3']
-    DX22_P3 = parvals['dx22_p3']
-    DX22_R3 = parvals['dx22_r3']
-    
-    DX22_R1 = parvals['dx22_r1']
-    
-    iomega = 1j * 2* np.pi * f
-    ZB_DX22 = np.divide(1.0, 1.0 / DX22_R2 + DX22_T2 * np.power(iomega, DX22_P2))
-    ZP_DX22 = np.divide(1.0, 1.0 / DX22_R3 + DX22_T3 * np.power(iomega, DX22_P3))
-    YP_DX22 = np.divide(1.0, ZP_DX22)
-    Zs_DX22 = DX22_R1
-    
-    in_sqrt_div = np.sqrt(np.divide(YP_DX22, Zs_DX22))
-    in_sqrt_mul = np.sqrt(np.multiply(Zs_DX22, YP_DX22))
-    
-    numerator = 1 + np.multiply(np.multiply(ZB_DX22, in_sqrt_div), 1.0 / np.tanh(in_sqrt_mul))
-    denominator = np.multiply(ZB_DX22, np.divide(YP_DX22, Zs_DX22)) + np.multiply(in_sqrt_div, 1.0 / np.tanh(in_sqrt_mul))
-    Z_DX22 = np.divide(numerator, denominator)
-    
-    Z_LR_DX30 = LR_DX30(parvals, f, c_case=c_case)
-    
-    Z_ret = Z_LR_DX30 + Z_DX22
-    return Z_ret
 
 
 def get_cost_vector(zcalc, zdata, weighting):
