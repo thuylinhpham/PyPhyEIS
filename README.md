@@ -16,7 +16,10 @@ More details please find in the tutorial repository.
 ## 3.	Citation
 Please cite this work as: 
 
-```Pham, Thuy Linh, Lee, Jong-Sook, Python assisted Physic-based Electrochemical Impedance Spectroscopy, (2020). doi:10.5281/zenodo.3820355.```
+```Pham, Thuy Linh, Lee, Jong-Sook, Python assisted Physic-based Electrochemical Impedance Spectroscopy, (2020).```
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3820355.svg)](https://doi.org/10.5281/zenodo.3820355)
+
 
 **Authors**: Thuy Linh Pham (thuylinhbkhn@gmail.com), Jong-Sook Lee (jongsook@jnu.ac.kr)
 
