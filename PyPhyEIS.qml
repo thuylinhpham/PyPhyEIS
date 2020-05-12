@@ -19,7 +19,7 @@ ApplicationWindow {
     property int lastW: 0
     property int lastH: 0
 
-	// Barsoukov-Pham-Lee #1
+    // Barsoukov-Pham-Lee #1
     property var barsoukov_Pham_Lee_1_names: ["L", "R", "R_OHM", "Rm", "Rct", "Rd", "Cdl_C0", "Cdl_HNC", "Cdl_HNT", "Cdl_HNP", "Cdl_HNU", "Cd_C0", "Cd_HNC", "Cd_HNT", "Cd_HNP", "Cd_HNU", "CPE_B_T", "CPE_B_P"]
     property var barsoukov_Pham_Lee_1_values: ["2.0717e-7", "1.2565e-7", "6.314", "34.68", "22.29", "27.37", "5.1388e-6", "3.542e-5", "0.0003955", "1.0", "0.75983", "0.048411", "0.97414", "134.9", "1.0", "1.0", "0.023301", "0.5"]
     property var barsoukov_Pham_Lee_1_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
