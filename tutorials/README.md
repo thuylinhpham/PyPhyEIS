@@ -1,4 +1,4 @@
-## Readme tutorials
+## Readme 
 
 - In the Excel file, the default values of parameters are given. The fundamental properties, amount of active materials, and diffusion geometry can be changed depending on your system. After putting some direct input parameters, the consequent resistance, capacitance parameters are calculated using the theoretical formulas.
 
