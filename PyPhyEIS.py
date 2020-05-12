@@ -57,7 +57,8 @@ class RunFitting(QThread):
 
     def fit_leastsq(self):
         """
-        Leastsq fitting
+        Leastsq fitting SciPy
+        lm
         :return:
         """
         pv, cv, infodict, mesg, ier = leastsq(models.cost_vector, self.init_val,
@@ -86,6 +87,7 @@ class RunFitting(QThread):
     def fit_leastsquares(self):
         """
         Leastsquares
+        trf
         :return:
         """
         r_lsq = least_squares(models.cost_vector, self.init_val,
