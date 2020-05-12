@@ -1,10 +1,10 @@
 # PyPhyEIS
 
-## 1. What is PyPhyEIS?
+## 1. What is it?
     
 *PyPhyEIS* is the abbreviation of “Python assisted Physic-based Electrochemical Impedance Spectroscopy” analyzer. It was implemented in Python 3 with PyQt framework for a friendlier user interface, integrated Plotly for graph visualization, and Least-squares optimization algorithm from SciPy. 
 
-## 2.	How to use PyPhyEIS?
+## 2.	How to use?
 
 To run the code directly in your computer using Python commands, you will need to install Python 3.x software and some other libraries from Scipy. For people who are not familiar with a programming language like Python, an executable file named “PyPhyEIS.exe” was created in order to help you use this software by running only the executable file without needing any coding skills nor software installations. The executable file was tested on Windows 10, but technically, it can be run on any version of Windows. 
 
