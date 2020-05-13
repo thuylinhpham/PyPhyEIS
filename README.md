@@ -16,7 +16,7 @@ https://github.com/thuylinhpham/PyPhyEIS/releases/download/v1.0.1/PyPhyEIS_v1.0.
 ## 3.	Citation
 - Please cite this work as: 
 
-```Pham, Thuy Linh, Lee, Jong-Sook, Python assisted Physic-based Electrochemical Impedance Spectroscopy, (2020).```
+```Thuy Linh Pham, Jong-Sook Lee, Python assisted Physic-based Electrochemical Impedance Spectroscopy, (2020).```
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3820355.svg)](https://doi.org/10.5281/zenodo.3820355)
 
@@ -26,7 +26,5 @@ https://github.com/thuylinhpham/PyPhyEIS/releases/download/v1.0.1/PyPhyEIS_v1.0.
 
 ## 4.	Acknowledgements
 
-- Funding is acknowledged from the National Research Foundation (NRF) of Korea funded by the Ministry of Science and ICT (MSIT) (NRF-2018R1A5A1025224), and the ERC…
-….Dr. Shin Namsoo, Dr. Shin Eui-chol, Prof. Kim Jaekook,…
-
+- Funding is acknowledged from the National Research Foundation (NRF) of Korea funded by the Ministry of Science and ICT (MSIT) (NRF-2018R1A5A1025224) for Engineering Research Center (ERC) for Artificial Intelligence Assisted Ionics Based Materials Development Platform.
 
