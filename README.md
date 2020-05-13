@@ -11,7 +11,7 @@
 - The executable file is available at:
 https://github.com/thuylinhpham/PyPhyEIS/releases/download/v1.0.1/PyPhyEIS_v1.0.1-windows.rar
 
-- More details please find in the tutorials repository.
+- More details please find in the *tutorials* repository.
 
 ## 3.	Citation
 - Please cite this work as: 
