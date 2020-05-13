@@ -26,5 +26,5 @@ https://github.com/thuylinhpham/PyPhyEIS/releases/download/v1.0.1/PyPhyEIS_v1.0.
 
 ## 4.	Acknowledgements
 
-- Funding is acknowledged from the National Research Foundation (NRF) of Korea funded by the Ministry of Science and ICT (MSIT) (NRF-2018R1A5A1025224) for Engineering Research Center (ERC) for Artificial Intelligence Assisted Ionics Based Materials Development Platform.
+- Funding is acknowledged from the National Research Foundation (NRF) of Korea funded by the Ministry of Science and ICT (MSIT) (NRF-2018R1A5A1025224) for Engineering Research Center (ERC) for *Artificial Intelligence Assisted Ionics Based Materials Development Platform*.
 
