@@ -2,7 +2,10 @@
 
 ## 1. What is it?
     
-- *PyPhyEIS* is the abbreviation of *Python assisted Physic-based Electrochemical Impedance Spectroscopy* analyzer. It was implemented in Python 3 with PyQt framework for a friendlier user interface, integrated Plotly for graph visualization, and Least-squares optimization algorithm from SciPy. 
+- *PyPhyEIS* is the abbreviation of *Python assisted Physic-based Electrochemical Impedance Spectroscopy* analyzer. It was implemented in Python 3 with PyQt framework for a friendlier user interface, integrated Plotly for graph visualization, and least-squares optimization algorithm from SciPy. 
+
+- It is regrettable that Equivalent Circuit Modeling (ECM) tends to be contrasted with physics-based modellings. ECM, however, without direct and clear physical interpretations, needs not be done, and apparently excellent description of the experimental data does not necessarily support the scientific validity.      
+
 
 ## 2.	How to use?
 
