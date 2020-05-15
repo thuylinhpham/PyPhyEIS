@@ -14,7 +14,7 @@
 
 - Modification of models e.g. to include stray impedance, SEI effects, or for a full cell for the data analysis can be custom-made using the source codes. We will provide our models, data, and analysis results, not limited to the battery systems, in time with respect to the publication schedules. **Feel free to contact to discuss your EIS data which may have more values than you suppose!**      
 ![Geometry](https://github.com/thuylinhpham/PyPhyEIS/blob/master/tutorials/Geometry.png)
-![Barsoukov](https://github.com/thuylinhpham/PyPhyEIS/blob/master/tutorials/barsoukov_tlm.png){:height="70%" width="70%"} 
+![Barsoukov](https://github.com/thuylinhpham/PyPhyEIS/blob/master/tutorials/barsoukov_tlm.png)
 
 ## 2.	How to use?
 
