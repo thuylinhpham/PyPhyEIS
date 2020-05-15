@@ -4,8 +4,11 @@
     
 - *PyPhyEIS* is the abbreviation of *Python assisted Physic-based Electrochemical Impedance Spectroscopy* analyzer. It was implemented in Python 3 with PyQt framework for a friendlier user interface, integrated Plotly for graph visualization, and least-squares optimization algorithm from SciPy. 
 
-- It is regrettable that Equivalent Circuit Modeling (ECM) tends to be contrasted with physics-based modellings. ECM, however, without direct and clear physical interpretations, needs not be done, and apparently excellent description of the experimental data does not necessarily support the scientific validity.      
+- It is regrettable that Equivalent Circuit Modeling (ECM) tends to be contrasted with physics-based modellings. ECM, however, without direct and clear physical interpretations, even if excellently describing the experimental data, needs not be done, if the fit parameters cannot be directly and clearly interpretable. Conventional application of ECM in separating resistance values based on fitting using Voigt-type models cannot be considered accurater than the graphical estimation, i.e. reading the characteristic points, when ECM is not properly, albeit simplied, physics-based. 
 
+- A *paradigm shift* in ECM is suggested: Separable or additive capacitance effects like Maxwell-type models are more proper physical description of many systems of interest such as electrochemical and electronic half cells (batteries, fuel cells, solar cells), (polycrystalline) ceramics of mixed conduction (ionic, electronic) and dielectrical properties (ferroelectric, paraelectric). Key components are thus (modified) Debye-type circuits connected in parallel, hierarchical laddernetwork, or transmission line models. Widely applied CPEs (constant phase elements) do not allow clearly defined capacitance effects, thus are suggested to be the root of all evil plaguing ECM practices. 
+
+- In conjuncton with a publication in progress, firstly, a physics-based ECM for battery electrodes, originally suggested by Barsoukov et al., is systematically presented in the present Python-assisted platform. The Barsoukov battery model is augmented by recently suggested generic diffusive boundary condition.  
 
 ## 2.	How to use?
 
