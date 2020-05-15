@@ -11,6 +11,8 @@
 - ECM can represent succinctly and intuitively complex multiple governing equations and thus test or reveal underlying principles rather easily. Although some free and open-source, and commercial softwares are available and custom-made to a certain extent, algorithms are essential, with which any analytical expressions of impedance can be simulated and fitted and R and C circuit parameters can be interrelated or functions of the variables as temperature, potential, etc. Python programming and accompanying development in data science tools allowed experimental scientists to implement ECM, as we wish!   
 
 - In conjuncton with a publication in progress, firstly, a physics-based ECM for battery electrodes, originally suggested by Barsoukov et al., is systematically presented in the present Python-assisted platform. The Barsoukov battery model is augmented by recently suggested generic diffusive boundary condition.  
+![Geometry](https://github.com/thuylinhpham/PyPhyEIS/blob/master/tutorials/Geometry.png)
+![Barsoukov](https://github.com/thuylinhpham/PyPhyEIS/blob/master/tutorials/Barsoukov.png)
 
 ## 2.	How to use?
 
