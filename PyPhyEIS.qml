@@ -19,20 +19,20 @@ ApplicationWindow {
     property int lastW: 0
     property int lastH: 0
 
-    // Barsoukov-Pham-Lee #1
-    property var barsoukov_Pham_Lee_1_names: ["L", "R", "R_OHM", "Rm", "Rct", "Rd", "Cdl_C0", "Cdl_HNC", "Cdl_HNT", "Cdl_HNP", "Cdl_HNU", "Cd_C0", "Cd_HNC", "Cd_HNT", "Cd_HNP", "Cd_HNU", "CPE_B_T", "CPE_B_P"]
-    property var barsoukov_Pham_Lee_1_values: ["2.0717e-7", "1.2565e-7", "6.314", "34.68", "22.29", "27.37", "5.1388e-6", "3.542e-5", "0.0003955", "1.0", "0.75983", "0.048411", "0.97414", "134.9", "1.0", "1.0", "0.023301", "0.5"]
-    property var barsoukov_Pham_Lee_1_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    // Barsoukov-Pham-Lee_1D
+    property var barsoukov_Pham_Lee_1_names: ["R_ohm", "Rm", "Rct", "Rd", "R_i", "C_dl", "C_d", "C_i", "Q_W"]
+    property var barsoukov_Pham_Lee_1_values: ["6.16", "6.24", "13.869", "26.01", "96.9", "3.03e-7", "0.07", "1.032", "0.000336"]
+    property var barsoukov_Pham_Lee_1_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1]
 	
-    // Barsoukov-Pham-Lee #2
-    property var barsoukov_Pham_Lee_2_names: ["L", "R", "R_OHM", "Rm", "Rct", "Rd", "Cdl_C0", "Cdl_HNC", "Cdl_HNT", "Cdl_HNP", "Cdl_HNU", "Cd_C0", "Cd_HNC", "Cd_HNT", "Cd_HNP", "Cd_HNU", "CPE_B_T", "CPE_B_P"]
-    property var barsoukov_Pham_Lee_2_values: ["2.0717e-7", "1.2565e-7", "6.314", "34.68", "22.29", "27.37", "5.1388e-6", "3.542e-5", "0.0003955", "1.0", "0.75983", "0.048411", "0.97414", "134.9", "1.0", "1.0", "0.023301", "0.5"]
-    property var barsoukov_Pham_Lee_2_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    // Barsoukov-Pham-Lee_2D
+    property var barsoukov_Pham_Lee_2_names: ["R_ohm", "Rm", "Rct", "Rd", "R_i", "C_dl", "C_d", "C_i", "Q_W"]
+    property var barsoukov_Pham_Lee_2_values: ["6.16", "6.24", "6.934", "26.01", "96.9", "6.07e-7", "0.07", "1.032", "0.000336"]
+    property var barsoukov_Pham_Lee_2_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1]
 
-    // Barsoukov-Pham-Lee #3
-    property var barsoukov_Pham_Lee_3_names: ["L", "R", "R_OHM", "Rm", "Rct", "Rd", "Cdl_C0", "Cdl_HNC", "Cdl_HNT", "Cdl_HNP", "Cdl_HNU", "Cd_C0", "Cd_HNC", "Cd_HNT", "Cd_HNP", "Cd_HNU", "CPE_B_T", "CPE_B_P"]
-    property var barsoukov_Pham_Lee_3_values: ["2.0717e-7", "1.2565e-7", "6.314", "34.68", "22.29", "27.37", "5.1388e-6", "3.542e-5", "0.0003955", "1.0", "0.75983", "0.048411", "0.97414", "134.9", "1.0", "1.0", "0.023301", "0.5"]
-    property var barsoukov_Pham_Lee_3_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    // Barsoukov-Pham-Lee_3D
+    property var barsoukov_Pham_Lee_3_names: ["R_ohm", "Rm", "Rct", "Rd", "R_i", "C_dl", "C_d", "C_i", "Q_W"]
+    property var barsoukov_Pham_Lee_3_values: ["6.16", "6.24", "4.623", "26.01", "96.9", "9.1e-7", "0.07", "1.032", "0.000336"]
+    property var barsoukov_Pham_Lee_3_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1]
 
     property string dialogCreated: ""
 
@@ -41,6 +41,7 @@ ApplicationWindow {
     property real releaseX: 0.0
     property real releaseY: 0.0
     property bool pressHold: false
+    property bool runFit: false
 
     property string ls_data: ""
     property string savedType: ""
@@ -118,27 +119,32 @@ ApplicationWindow {
         }
 
         onFitStatus: {
-            fittingBtn.text = "Fit"
-			simulationBtn.text = "Simulation"
+            var add_text = ""
+            
+            if (runFit)
+                add_text = "Fitting"
+            else
+                add_text = "Simulation"
+            
+            runBtn.text = "Run " + add_text
 			
-			fittingBtn.enabled = true
-			simulationBtn.enabled = true
+			runBtn.enabled = true
 			resetParameters.enabled = true
-			
+            
+            runsimbtn.enabled = true
+            runfitbtn.enabled = true
+            freqrangebtn.enabled = true
             if (fit_status == 1) {
                 fitStatus.text = "Success"
-                console.log("Fit succeeded")
                 saveParameters.enabled = true
                 saveFitResults.enabled = true
             } else {
                 saveParameters.enabled = false
                 saveFitResults.enabled = false
                 if (fit_status == 0) {
-                    fitStatus.text = "Failed"
-                    console.log("Fit failed")
+                    fitStatus.text = "Failed " + add_text
                 } else {
-                    fitStatus.text = "Stopped"
-                    console.log("Fit stopped")
+                    fitStatus.text = "Stopped " + add_text
                 }
             }
         }
@@ -208,8 +214,11 @@ ApplicationWindow {
     }
 
     function createDialogParameters(model_name, param_names, param_values, param_fixed) {
-        fittingSimulationDialog.title = model_name + " Fitting/Simulation"
-        //        console.log(model_name, " selected")
+        if (runFit)
+            fittingSimulationDialog.title = "Fitting " + model_name
+        else
+            fittingSimulationDialog.title = "Simulation " + model_name
+        
         if (dialogCreated === model_name) {
             console.log(dialogCreated, model_name)
         } else {
@@ -278,7 +287,7 @@ ApplicationWindow {
                         model: ["Unit", "Data proportional", "Calc proportional", "Data Modulus", "Calc modulus"]
                         ToolTip.text: "Weighting Method"
                         ToolTip.visible: hovered
-                        implicitWidth: 115
+                        implicitWidth: 125
                         currentIndex: 4
                         background: Rectangle {
                             border.color: "black"
@@ -346,7 +355,7 @@ ApplicationWindow {
                     }
 
                     Rectangle {
-                        width: 130
+                        width: 100
                         height: fitMethod.height
                         Layout.leftMargin: 5
                         color: "transparent"
@@ -377,7 +386,7 @@ ApplicationWindow {
                     }
 
                     Rectangle {
-                        width: 130
+                        width: 100
                         height: fitMethod.height
                         Layout.leftMargin: 5
                         color: "transparent"
@@ -408,6 +417,7 @@ ApplicationWindow {
                     Layout.row: 1
                     Layout.fillHeight: true
                     Layout.fillWidth: true
+                    Layout.minimumWidth: 300
                     border {
                         width: 2
                         color: "blue"
@@ -425,7 +435,7 @@ ApplicationWindow {
                             Layout.fillWidth: true
                             Layout.margins: 10
                             rows: 2
-                            columns: 3
+                            columns: 2
                             height: resetParameters.height
 
                             Button {
@@ -441,35 +451,41 @@ ApplicationWindow {
                             }
 
                             Button {
-                                id: fittingBtn
-                                text: "Fit"
+                                id: runBtn
+                                text: "Run"
                                 Layout.maximumHeight: 30
                                 
                                 Layout.fillWidth: true
                                 onClicked: {
-                                    if (fittingBtn.text == "Stop Fitting") {
+                                    fit_log_text.text = ""
+                                    if (runBtn.text == "Stop Fitting") {
                                         console.log("Stop fitting")
                                         fitStatus.text = "Stopping"
                                         impedance.stop_fitting()
-                                    } else {
-                                        if (dataPath.text === "Data Path:"
+                                    }
+                                    else if (runBtn.text == "Stop Simulation")  {
+                                        console.log("Stop Simulation")
+                                        fitStatus.text = "Stopping"
+                                        impedance.stop_fitting()
+                                    }
+                                    else if ((runFit || parseInt(numPerDecade.text) <= 0) && dataPath.text === "Data Path:"
                                                 && ls_data == "") {
-                                            fitStatusDialog.text = "Please choose data file, model"
+                                            fitStatusDialog.text = "Please choose impedance data file"
                                             fitStatusDialog.open()
                                         } else {
-                                            fitStatus.text = "Running"
                                             var send_names = []
                                             var send_vals = []
                                             var send_fixed = []
+                                            var send_freq_range = [minFreq.text, maxFreq.text, numPerDecade.text]
                                             var cur_strings = ""
                                             var cur_isFixed = ""
                                             var cur_name = ""
-                                            var send_mdl = dataSelect.currentText
+                                            var send_mdl = modelSelect.currentText
                                             var send_data = dataPath.text
                                             var cur_method = fitMethod.currentText
-                                            //var niters = maxNumIteration.text
-                                            //var pnorm = parnorm.checked ? 1 : 0
-                                            //var rm_noise = rmNoise.checked ? 1: 0
+                                            var send_op = 0
+
+                                            var count_free = 0
                                             for (var i = 1; i < gridDialog.children.length; i++) {
                                                 cur_name = gridDialog.children[i].children[0].children[0].text.toLowerCase()
                                                 cur_strings = gridDialog.children[i].children[1].children[0].text
@@ -477,83 +493,49 @@ ApplicationWindow {
                                                 send_vals.push(cur_strings)
                                                 send_fixed.push(cur_isFixed)
                                                 send_names.push(cur_name)
+                                                if (cur_isFixed == 0)
+                                                    count_free = count_free + 1
                                             }
 
-                                            if (fileDialog.selectMultiple) {
-                                                send_data = ls_data
+                                            if (count_free == 0 && runFit)    {
+                                                fitStatusDialog.text = "Need at least 1 free parameter."
+                                                fitStatusDialog.open()
                                             }
+                                            else    {
+                                                fitStatus.text = "Running"
+                                                if (fileDialog.selectMultiple) {
+                                                    send_data = ls_data
+                                                }
 
-                                            fittingBtn.text = "Stop Fitting"
-											
-											simulationBtn.enabled = false
-											resetParameters.enabled = false
-											
-											saveParameters.enabled = false
-											saveFitResults.enabled = false
-                                            impedance.fitting(
-                                                        send_names, send_vals,
-                                                        send_fixed, send_mdl,
-                                                        wgtMethod.currentIndex,
-                                                        fitMethod.currentText,
-                                                        send_data, 1, 0)
+                                                if (runFit) {
+                                                    runBtn.text = "Stop Fitting"
+                                                    send_op = 1
+                                                }
+                                                else    {
+                                                    runBtn.text = "Stop Simulation"
+                                                    send_op = 2
+                                                }
+
+                                                resetParameters.enabled = false
+                                                
+                                                saveParameters.enabled = false
+                                                saveFitResults.enabled = false
+                                                runsimbtn.enabled = false
+                                                runfitbtn.enabled = false
+                                                freqrangebtn.enabled = false
+
+                                                impedance.fitting(
+                                                            send_names, send_vals,
+                                                            send_fixed, send_mdl,
+                                                            wgtMethod.currentIndex,
+                                                            fitMethod.currentText,
+                                                            send_data, send_op, 0, send_freq_range)
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            Button {
-                                id: simulationBtn
-                                text: "Simulation"
-                                Layout.maximumHeight: 30
-                                //Layout.maximumWidth: 100
-                                Layout.fillWidth: true
-                                onClicked: {
+                            
 
-                                    if (dataPath.text === "Data Path:"
-                                            && ls_data == "") {
-                                        fitStatusDialog.text = "Please choose data file, model"
-                                        fitStatusDialog.open()
-                                    } 
-									else if (simulationBtn.text == "Stop Simulation") {
-                                        console.log("Stop Simulation")
-                                        fitStatus.text = "Stopping"
-                                        impedance.stop_fitting()
-                                    }
-									
-									else {
-                                        fitStatus.text = "Running"
-                                        var send_names = []
-                                        var send_vals = []
-                                        var send_fixed = []
-                                        var cur_strings = ""
-                                        var cur_isFixed = ""
-                                        var cur_name = ""
-                                        var send_mdl = dataSelect.currentText
-                                        var send_data = dataPath.text
-                                        var cur_method = fitMethod.currentText
-                                        for (var i = 1; i < gridDialog.children.length; i++) {
-                                            cur_name = gridDialog.children[i].children[0].children[0].text.toLowerCase()
-                                            cur_strings = gridDialog.children[i].children[1].children[0].text
-                                            cur_isFixed = gridDialog.children[i].children[2].checked ? 0 : 1
-                                            send_vals.push(cur_strings)
-                                            send_fixed.push(cur_isFixed)
-                                            send_names.push(cur_name)
-                                        }
-										
-										simulationBtn.text = "Stop Simulation"
-										
-										fittingBtn.enabled = false
-										resetParameters.enabled = false
-										saveParameters.enabled = false
-										saveFitResults.enabled = false
-                                        impedance.fitting(
-                                                    send_names, send_vals,
-                                                    send_fixed, send_mdl,
-                                                    wgtMethod.currentIndex,
-                                                    fitMethod.currentText,
-                                                    send_data, 2, 0, 0, 0)
-                                    }
-                                }
-                            }
                             Button {
                                 id: saveParameters
                                 text: "Save Parameters"
@@ -631,36 +613,23 @@ ApplicationWindow {
         }
     }
 
+    MessageDialog {
+        id: aboutme
+        title: qsTr("About")
+        text: "PyPhyEIS by Thuy Linh Pham"
+        icon: StandardIcon.Information
+    }
+
     menuBar: MenuBar {
         objectName: "abc"
         Menu {
-            title: "File"
-            MenuItem {
-                text: "Open..."
-            }
-            MenuItem {
-                text: "Close"
-            }
-        }
-
-        Menu {
-            title: "Edit"
-            MenuItem {
-                text: "Cut"
-            }
-            MenuItem {
-                text: "Copy"
-            }
-            MenuItem {
-                text: "Paste"
-            }
+            title: "Home"
+            Action {text: qsTr("ECL homepage"); onTriggered: {graphView.url=""; graphView.url="https://sites.google.com/site/jnuelectroceramics/"}}
         }
 
         Menu {
             title: "Help"
-            MenuItem {
-                text: "About"
-            }
+            Action {text: qsTr("About"); onTriggered: aboutme.open()}
         }
     }
 
@@ -749,7 +718,7 @@ ApplicationWindow {
         id: gridLayout
         anchors.fill: parent
         columns: 1
-        rows: 2
+        rows: 5
 
         Layout.fillHeight: true
         Layout.fillWidth: true
@@ -757,13 +726,15 @@ ApplicationWindow {
         anchors.bottom: mainView.bottom
         anchors.left: mainView.left
         anchors.right: mainView.right
-
+        rowSpacing: 5
         Rectangle {
             id: rec01
             Layout.fillWidth: true
-            height: 50
-
+            height: 35
+            
+            anchors.bottomMargin: 0
             RowLayout {
+                id: md_data_layout
                 anchors.left: parent.left
                 anchors.leftMargin: 5
                 Layout.fillHeight: true
@@ -771,24 +742,26 @@ ApplicationWindow {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.top: parent.top
 
+                // Model selection
                 ComboBox {
-                    id: dataSelect
+                    id: modelSelect
                     rightPadding: 0
                     antialiasing: true
                     implicitWidth: 325
                     flat: false
-                    model: ["Barsoukov-Pham-Lee #1", "Barsoukov-Pham-Lee #2", "Barsoukov-Pham-Lee #3"]
+                    model: ["Barsoukov-Pham-Lee_1D", "Barsoukov-Pham-Lee_2D", "Barsoukov-Pham-Lee_3D"]
                     
                     padding: 0
                     background: Rectangle {
                         border.width: 2
                         radius: 3
-                        width: dataSelect.width
+                        width: modelSelect.width
                     }
                     ToolTip.text: "Select data type"
                     ToolTip.visible: hovered
                 }
 
+                // Select and load impedance data file
                 Button {
                     id: dataBtn
                     text: "<font color='#000000'> Data </font>"
@@ -797,20 +770,20 @@ ApplicationWindow {
                     Layout.maximumWidth: 60
                     onClicked: {
                         console.log("Open Data file")
-                        switch (dataSelect.currentText) {
+                        switch (modelSelect.currentText) {
 
-                        case "Barsoukov-Pham-Lee #1":
-                            fileDialog.title = "Please choose data for Barsoukov-Pham-Lee #1"
+                        case "Barsoukov-Pham-Lee_1D":
+                            fileDialog.title = "Please choose data for Barsoukov-Pham-Lee_1D"
                             fileDialog.selectMultiple = false
                             break
 
-                        case "Barsoukov-Pham-Lee #2":
-                            fileDialog.title = "Please choose data for Barsoukov-Pham-Lee #2"
+                        case "Barsoukov-Pham-Lee_2D":
+                            fileDialog.title = "Please choose data for Barsoukov-Pham-Lee_2D"
                             fileDialog.selectMultiple = false
                             break
 
-                        case "Barsoukov-Pham-Lee #3":
-                            fileDialog.title = "Please choose data for Barsoukov-Pham-Lee #3"
+                        case "Barsoukov-Pham-Lee_3D":
+                            fileDialog.title = "Please choose data for Barsoukov-Pham-Lee_3D"
                             fileDialog.selectMultiple = false
                             break
 
@@ -822,9 +795,84 @@ ApplicationWindow {
                     }
                 }
 
+                Text {
+                    id: dataPath
+                    text: "Data Path:"
+                }
+            }
+        }
+
+        Rectangle   {
+            id: rec02
+            Layout.fillWidth: true
+            height: 35
+            anchors.topMargin: 0
+            anchors.bottomMargin: 0
+            
+            RowLayout   {
+                anchors.left: parent.left
+                //anchors.leftMargin: modelSelect.width + 2*md_data_layout.spacing
+                anchors.leftMargin: 5
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                //anchors.bottomMargin: 0
                 Button {
-                    id: button
-                    text: "Run Fit/Simulation"
+                    id: runfitbtn
+                    text: "Fit"
+                    Layout.maximumHeight: 30
+                    Layout.maximumWidth: 60
+                    padding: 5
+                    highlighted: false
+                    flat: false
+
+                    states: State {
+                        name: "brighter"
+                        when: mouseArea.pressed
+                        PropertyChanges {
+                            target: rect
+                            color: "yellow"
+                        }
+                    }
+                    onClicked: {
+                        runFit = true
+                        fitMethod.visible = true
+                        wgtMethod.visible = true
+                        console.log("Run fitting simualtion clicked")
+                        switch (modelSelect.currentText) {
+                        
+                        case "Barsoukov-Pham-Lee_1D":
+                            console.log("Please choose data for Barsoukov-Pham-Lee_1D")
+                            createDialogParameters("Barsoukov-Pham-Lee_1D", barsoukov_Pham_Lee_1_names,
+                                                    barsoukov_Pham_Lee_1_values, barsoukov_Pham_Lee_1_fixed)
+                            break
+
+                        case "Barsoukov-Pham-Lee_2D":
+                            console.log("Please choose data for Barsoukov-Pham-Lee_2D")
+                            createDialogParameters("Barsoukov-Pham-Lee_2D", barsoukov_Pham_Lee_2_names,
+                                                    barsoukov_Pham_Lee_2_values, barsoukov_Pham_Lee_2_fixed)
+                            break
+
+                        case "Barsoukov-Pham-Lee_3D":
+                            console.log("Please choose data for Barsoukov-Pham-Lee_3D")
+                            createDialogParameters("Barsoukov-Pham-Lee_3D", barsoukov_Pham_Lee_3_names,
+                                                    barsoukov_Pham_Lee_3_values, barsoukov_Pham_Lee_3_fixed)
+                            break
+
+                        default:
+                            console.log("Please select data")
+                            break
+                        }
+                        runBtn.text = "Run Fitting"
+                        fittingSimulationDialog.open()
+                    }
+                }
+
+                Button {
+                    id: runsimbtn
+                    text: "Simulation"
                     Layout.maximumHeight: 30
                     padding: 5
                     highlighted: false
@@ -839,48 +887,202 @@ ApplicationWindow {
                         }
                     }
                     onClicked: {
+                        runFit = false
+                        fitMethod.visible = false
+                        wgtMethod.visible = false
                         console.log("Run fitting simualtion clicked")
-                        switch (dataSelect.currentText) {
+                        switch (modelSelect.currentText) {
                         
-                        case "Barsoukov-Pham-Lee #1":
-                            console.log("Please choose data for Barsoukov-Pham-Lee #1")
-                            createDialogParameters("Barsoukov-Pham-Lee #1", barsoukov_Pham_Lee_1_names,
-                                                   barsoukov_Pham_Lee_1_values, barsoukov_Pham_Lee_1_fixed)
+                        case "Barsoukov-Pham-Lee_1D":
+                            console.log("Please choose data for Barsoukov-Pham-Lee_1D")
+                            createDialogParameters("Barsoukov-Pham-Lee_1D", barsoukov_Pham_Lee_1_names,
+                                                    barsoukov_Pham_Lee_1_values, barsoukov_Pham_Lee_1_fixed)
                             break
 
-                        case "Barsoukov-Pham-Lee #2":
-                            console.log("Please choose data for Barsoukov-Pham-Lee #2")
-                            createDialogParameters("Barsoukov-Pham-Lee #2", barsoukov_Pham_Lee_2_names,
-                                                   barsoukov_Pham_Lee_2_values, barsoukov_Pham_Lee_2_fixed)
+                        case "Barsoukov-Pham-Lee_2D":
+                            console.log("Please choose data for Barsoukov-Pham-Lee_2D")
+                            createDialogParameters("Barsoukov-Pham-Lee_2D", barsoukov_Pham_Lee_2_names,
+                                                    barsoukov_Pham_Lee_2_values, barsoukov_Pham_Lee_2_fixed)
                             break
 
-                        case "Barsoukov-Pham-Lee #3":
-                            console.log("Please choose data for Barsoukov-Pham-Lee #3")
-                            createDialogParameters("Barsoukov-Pham-Lee #3", barsoukov_Pham_Lee_3_names,
-                                                   barsoukov_Pham_Lee_3_values, barsoukov_Pham_Lee_3_fixed)
+                        case "Barsoukov-Pham-Lee_3D":
+                            console.log("Please choose data for Barsoukov-Pham-Lee_3D")
+                            createDialogParameters("Barsoukov-Pham-Lee_3D", barsoukov_Pham_Lee_3_names,
+                                                    barsoukov_Pham_Lee_3_values, barsoukov_Pham_Lee_3_fixed)
                             break
 
                         default:
                             console.log("Please select data")
                             break
                         }
-
+                        runBtn.text = "Run Simulation"
                         fittingSimulationDialog.open()
                     }
                 }
+                Button {
+                    id: freqrangebtn
+                    text: "Frequency range"
+                    Layout.maximumHeight: 30
+                    padding: 5
+                    highlighted: false
+                    flat: false
 
-                Text {
-                    id: dataPath
-                    text: "Data Path:"
+                    states: State {
+                        name: "brighter"
+                        when: mouseArea.pressed
+                        PropertyChanges {
+                            target: rect
+                            color: "yellow"
+                        }
+                    }
+                    onClicked: {
+                        console.log("Frequency range clicked")
+                        minFreq.readOnly = !minFreq.readOnly
+                        maxFreq.readOnly = !maxFreq.readOnly
+                        numPerDecade.readOnly = !numPerDecade.readOnly
+                        if (minFreq.readOnly == true) {
+                            highlighted = false
+                            minFreqRec.color = 'gainsboro'
+                            maxFreqRec.color = 'gainsboro'
+                            numPerDecadeRec.color = 'gainsboro'
+                            minFreq.selectByMouse = false
+                            maxFreq.selectByMouse = false
+                            numPerDecade.selectByMouse = false
+                        }
+                        else {
+                            highlighted = true 
+                            minFreqRec.color = 'white'
+                            maxFreqRec.color = 'white'
+                            numPerDecadeRec.color = 'white'
+                            minFreq.selectByMouse = true
+                            maxFreq.selectByMouse = true
+                            numPerDecade.selectByMouse = true
+                        }
+                    }
                 }
             }
         }
 
+        Rectangle {
+            Layout.fillWidth: true
+            height: 35
+            anchors.topMargin: 0
+            anchors.bottomMargin: 0
+            id: rec04
+            RowLayout {
+                anchors.left: parent.left
+                anchors.leftMargin: 5
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                Text {
+                    text: "Minimum (Hz)"
+                    font.bold: false
+                }
+                Rectangle {
+                    id: minFreqRec
+                    width:100;
+                    height:20;
+                    color: "gainsboro";
+                    border.color:"black"; 
+                    TextInput {
+                        id: minFreq
+                        text: '1e-6'
+                        readOnly:true;
+                        cursorVisible: false; 
+                        selectionColor: "green";
+                        selectByMouse: false;
+                        clip: true;
+                        font.pixelSize: 12;
+                        anchors.left: 
+                        parent.left;
+                        anchors.bottom:parent.bottom;
+                        leftPadding: 5;
+                        rightPadding:5; 
+                        bottomPadding:2; 
+                        width:95
+
+                        
+                    }
+                }
+                Text {
+                    text: "Maximum (Hz)"
+                    font.bold: false
+                }
+                Rectangle {
+                    id: maxFreqRec
+                    width:100;
+                    height:20;
+                    color: "gainsboro";
+                    border.color:"black"; 
+                    TextInput {
+                        id: maxFreq
+                        text: '1e6'
+                        readOnly:true; 
+                        cursorVisible: false; 
+                        selectionColor: "green";
+                        selectByMouse: false;
+                        clip: true;
+                        font.pixelSize: 12;
+                        anchors.left: 
+                        parent.left;
+                        anchors.bottom:parent.bottom;
+                        leftPadding: 5;
+                        rightPadding:5; 
+                        bottomPadding:2; 
+                        width:95
+                    }
+                }
+                Text {
+                    text: "Number per decade"
+                    font.bold: false
+                }
+                Rectangle {
+                    id: numPerDecadeRec
+                    width:100;
+                    height:20;
+                    color: "gainsboro";
+                    border.color:"black"; 
+                    TextInput {
+                        id: numPerDecade
+                        text: '10'
+                        readOnly:true; 
+                        cursorVisible: false; 
+                        selectionColor: "green";
+                        selectByMouse: false;
+                        clip: true;
+                        font.pixelSize: 12;
+                        anchors.left: 
+                        parent.left;
+                        anchors.bottom:parent.bottom;
+                        leftPadding: 5;
+                        rightPadding:5; 
+                        bottomPadding:2; 
+                        width:95
+                    }
+                }
+            }
+        }
         WebEngineView {
             Layout.fillHeight: true
             Layout.fillWidth: true
             id: graphView
             url: "https://sites.google.com/site/jnuelectroceramics/"
+            // onLoadingChanged: {
+            //     if (loading == false)
+            //         loading_indicator.running = false
+            //     else
+            //         loading_indicator.running = true
+            // }
+
+        }
+        BusyIndicator{
+            id: loading_indicator
+            anchors.centerIn: parent
+            running: graphView.loading === true
+            palette.dark: "blue"
         }
     }
 }

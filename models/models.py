@@ -23,7 +23,9 @@ def diffcylim(w, Rd, Cd):
     return z_ret
 
 def Barsoukov_Pham_Lee_1(parvals, f):
-    """ Barsoukov-Pham-Lee #1D """
+    """
+    Barsoukov-Pham-Lee #1D
+    """
 
     omegas = 2 * np.pi * np.array(f)
 
@@ -31,19 +33,26 @@ def Barsoukov_Pham_Lee_1(parvals, f):
     Rct = parvals['rct']
     Rd = parvals['rd']
 
-    Cdl_C0 = parvals['cdl_c0']
-    Cdl_HNC = parvals['cdl_hnc']
-    Cdl_HNT = parvals['cdl_hnt']
-    Cdl_HNP = parvals['cdl_hnp']
-    Cdl_HNU = parvals['cdl_hnu']
+    R_i = parvals["r_i"]
+    C_dl = parvals["c_dl"]
+    C_d = parvals["c_d"]
 
-    Cd_C0 = parvals['cd_c0']
-    Cd_HNC = parvals['cd_hnc']
-    Cd_HNT = parvals['cd_hnt']
-    Cd_HNP = parvals['cd_hnp']
-    Cd_HNU = parvals['cd_hnu']
-    CPE_B_T = parvals['cpe_b_t']
-    CPE_B_P = parvals['cpe_b_p']
+    C_i = parvals["c_i"]
+    Q_W = parvals["q_w"]
+
+    Cdl_C0 = C_dl
+    Cdl_HNC = 1e-20
+    Cdl_HNT = 1e-20
+    Cdl_HNP = 1e-20
+    Cdl_HNU = 1e-20
+
+    Cd_C0 = C_d
+    Cd_HNC = C_i
+    Cd_HNT = R_i*C_i
+    Cd_HNP = 1
+    Cd_HNU = 1
+    CPE_B_T = Q_W
+    CPE_B_P = 0.5
 
     Cstar_d = Cd_C0 + Cd_HNC / ((1 + (1j * omegas * Cd_HNT) ** Cd_HNU) ** Cd_HNP)
     Cstar_dl = Cdl_C0 + Cdl_HNC / ((1 + (1j * omegas * Cdl_HNT) ** Cdl_HNU) ** Cdl_HNP)
@@ -74,19 +83,26 @@ def Barsoukov_Pham_Lee_2(parvals, f):
     Rct = parvals['rct']
     Rd = parvals['rd']
 
-    Cdl_C0 = parvals['cdl_c0']
-    Cdl_HNC = parvals['cdl_hnc']
-    Cdl_HNT = parvals['cdl_hnt']
-    Cdl_HNP = parvals['cdl_hnp']
-    Cdl_HNU = parvals['cdl_hnu']
+    R_i = parvals["r_i"]
+    C_dl = parvals["c_dl"]
+    C_d = parvals["c_d"]
 
-    Cd_C0 = parvals['cd_c0']
-    Cd_HNC = parvals['cd_hnc']
-    Cd_HNT = parvals['cd_hnt']
-    Cd_HNP = parvals['cd_hnp']
-    Cd_HNU = parvals['cd_hnu']
-    CPE_B_T = parvals['cpe_b_t']
-    CPE_B_P = parvals['cpe_b_p']
+    C_i = parvals["c_i"]
+    Q_W = parvals["q_w"]
+
+    Cdl_C0 = C_dl
+    Cdl_HNC = 1e-20
+    Cdl_HNT = 1e-20
+    Cdl_HNP = 1e-20
+    Cdl_HNU = 1e-20
+
+    Cd_C0 = C_d
+    Cd_HNC = C_i
+    Cd_HNT = R_i*C_i
+    Cd_HNP = 1
+    Cd_HNU = 1
+    CPE_B_T = Q_W
+    CPE_B_P = 0.5
 
     Cstar_d = Cd_C0 + (2*(Cd_HNC + Cd_C0)- Cd_C0)/ ((1 + (1j * omegas * Cd_HNT) ** Cd_HNU) ** Cd_HNP)
     Cstar_dl = Cdl_C0 + Cdl_HNC / ((1 + (1j * omegas * Cdl_HNT) ** Cdl_HNU) ** Cdl_HNP)
@@ -114,19 +130,26 @@ def Barsoukov_Pham_Lee_3(parvals, f):
     Rct = parvals['rct']
     Rd = parvals['rd']
 
-    Cdl_C0 = parvals['cdl_c0']
-    Cdl_HNC = parvals['cdl_hnc']
-    Cdl_HNT = parvals['cdl_hnt']
-    Cdl_HNP = parvals['cdl_hnp']
-    Cdl_HNU = parvals['cdl_hnu']
+    R_i = parvals["r_i"]
+    C_dl = parvals["c_dl"]
+    C_d = parvals["c_d"]
 
-    Cd_C0 = parvals['cd_c0']
-    Cd_HNC = parvals['cd_hnc']
-    Cd_HNT = parvals['cd_hnt']
-    Cd_HNP = parvals['cd_hnp']
-    Cd_HNU = parvals['cd_hnu']
-    CPE_B_T = parvals['cpe_b_t']
-    CPE_B_P = parvals['cpe_b_p']
+    C_i = parvals["c_i"]
+    Q_W = parvals["q_w"]
+
+    Cdl_C0 = C_dl
+    Cdl_HNC = 1e-20
+    Cdl_HNT = 1e-20
+    Cdl_HNP = 1e-20
+    Cdl_HNU = 1e-20
+
+    Cd_C0 = C_d
+    Cd_HNC = C_i
+    Cd_HNT = R_i*C_i
+    Cd_HNP = 1
+    Cd_HNU = 1
+    CPE_B_T = Q_W
+    CPE_B_P = 0.5
 
     Cstar_d = Cd_C0 + (3*(Cd_HNC + Cd_C0)- Cd_C0) / ((1 + (1j * omegas * Cd_HNT) ** Cd_HNU) ** Cd_HNP)
     Cstar_dl = Cdl_C0 + Cdl_HNC / ((1 + (1j * omegas * Cdl_HNT) ** Cdl_HNU) ** Cdl_HNP)
@@ -160,12 +183,12 @@ def Barsoukov_Pham_Lee(parvals, f, T=None, Voltage=None, c_case=5):
     else:
         print('Undefined')
 
-    L = parvals['l']
-    R = parvals['r']
+    L_str = 1e-20
+    R_str = 1e-20
     R_OHM = parvals['r_ohm']
-    Z_L = 1j * 2 * np.pi * f * L
+    Z_L = 1j * 2 * np.pi * f * L_str
 
-    fit_zrzi = 1 / ((1 / Z_L) + (1 / R)) + R_OHM + fit_zrzi
+    fit_zrzi = 1 / ((1 / Z_L) + (1 / R_str)) + R_OHM + fit_zrzi
 
     return fit_zrzi
 

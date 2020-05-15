@@ -232,6 +232,11 @@ class RunFitting(QThread):
         html_graphs = open("impedance_plot.html", "w")
         html_graphs.write("<html><head></head><body>" + "\n")
 
+        if np.sum(np.abs(np.real(self.z_data))) == 0:
+            visible_only = 'legendonly'
+        else:
+            visible_only = None
+
         if self.model_type == 1:
             fitColor = '#008000'
             rawColor = '#FF0000'
@@ -239,9 +244,9 @@ class RunFitting(QThread):
             iFit = go.Scatter(x=np.real(self.zf), y=np.imag(self.zf), mode='lines', name='Fit',
                               line=dict(color=fitColor))
             iRaw = go.Scatter(x=np.real(self.z_data), y=np.imag(self.z_data), mode='lines+markers', name='Raw',
-                              line=dict(color=rawColor), marker=dict(color=markerColor, size=5))
+                              line=dict(color=rawColor), marker=dict(color=markerColor, size=5), visible=visible_only)
 
-            iAdmitFit, iCapacFit, iCapacFit_abs, iAdmitRaw, iCapacRaw, iCapacRaw_abs = self.calc_admittance_capacitance()
+            iAdmitFit, iCapacFit, iCapacFit_abs, iAdmitRaw, iCapacRaw, iCapacRaw_abs = self.calc_admittance_capacitance(visible_only)
 
             graph_names = ["Impedance", "Capacitance", "Admittance", "Linear Capacitance"]#, "Log abs Capacitance"]
             graph_data = [[iFit, iRaw], [iCapacFit, iCapacRaw], [iAdmitFit, iAdmitRaw], [iCapacFit, iCapacRaw], [iCapacFit_abs, iCapacRaw_abs]]
@@ -302,10 +307,10 @@ class RunFitting(QThread):
                 cur_fit_capac = go.Scatter(x=cur_f, y=self.get_capacitance(cur_f, cur_zf), mode='lines+markers',
                                            name=key)
 
-                cur_raw = go.Scatter(x=np.real(cur_zraw), y=np.imag(cur_zraw), mode='lines+markers', name=key)
-                cur_raw_admit = go.Scatter(x=cur_f, y=self.get_admittance(cur_zraw), mode='lines+markers', name=key)
+                cur_raw = go.Scatter(x=np.real(cur_zraw), y=np.imag(cur_zraw), mode='lines+markers', name=key, visible=visible_only)
+                cur_raw_admit = go.Scatter(x=cur_f, y=self.get_admittance(cur_zraw), mode='lines+markers', name=key, visible=visible_only)
                 cur_raw_capac = go.Scatter(x=cur_f, y=self.get_capacitance(cur_f, cur_zraw), mode='lines+markers',
-                                           name=key)
+                                           name=key, visible=visible_only)
 
                 iFit.append(cur_fit)
                 fit_fim.append(go.Scatter(x=cur_f, y=-np.imag(cur_zf), mode='lines+markers', name=key))
@@ -313,7 +318,7 @@ class RunFitting(QThread):
                 fit_capac.append(cur_fit_capac)
 
                 iRaw.append(cur_raw)
-                raw_fim.append(go.Scatter(x=cur_f, y=-np.imag(cur_zraw), mode='lines+markers', name=key))
+                raw_fim.append(go.Scatter(x=cur_f, y=-np.imag(cur_zraw), mode='lines+markers', name=key, visible=visible_only))
                 raw_admit.append(cur_raw_admit)
                 raw_capac.append(cur_raw_capac)
 
@@ -387,7 +392,7 @@ class RunFitting(QThread):
                                          freq)
         return cur_capacitance
 
-    def calc_admittance_capacitance(self):
+    def calc_admittance_capacitance(self, visible_only=None):
         """
         Emit Admittance
         """
@@ -407,11 +412,11 @@ class RunFitting(QThread):
  
         
         iAdmitRaw = go.Scatter(x=root_data, y=raw_Admit, mode='lines+markers', name='Raw', line=dict(color=rawColor),
-                               marker=dict(color=markerColor, size=5))
+                               marker=dict(color=markerColor, size=5), visible=visible_only)
         iCapacRaw = go.Scatter(x=root_data, y=raw_Capa, mode='lines+markers', name='Raw', line=dict(color=rawColor),
-                               marker=dict(color=markerColor, size=5))
+                               marker=dict(color=markerColor, size=5), visible=visible_only)
         iCapacRaw_abs = go.Scatter(x=root_data, y=np.abs(raw_Capa), mode='lines+markers', name='Raw', line=dict(color=rawColor),
-                               marker=dict(color=markerColor, size=5))
+                               marker=dict(color=markerColor, size=5), visible=visible_only)
                                
         cur_real = np.real(self.zf)
         cur_im = np.imag(self.zf)
@@ -516,8 +521,8 @@ class FittingImpedance(QObject):
 
     loadParamsEmit = pyqtSignal(list, list, list, list, list, arguments=['param_names', 'best_params', 'error_fit', 'error_fit_percent', 'par_frees'])
     # Slot for fitting
-    @pyqtSlot(list, list, list, QVariant, int, QVariant, QVariant, int, int)
-    def fitting(self, recv_names, recv_vals, recv_fixed, recv_mdl, recv_wgt, recv_method, recv_data, isFit, rm_positive):
+    @pyqtSlot(list, list, list, QVariant, int, QVariant, QVariant, int, int, list)
+    def fitting(self, recv_names, recv_vals, recv_fixed, recv_mdl, recv_wgt, recv_method, recv_data, isFit, rm_positive, freq_range):
         """
 
         :param recv_names:  Parameter names
@@ -565,77 +570,21 @@ class FittingImpedance(QObject):
 
         # Read data
         print('Recved MDL: ', recv_mdl)
-                              
-                                                                                                 
-                                                 
-                                
-                                                                                                 
-                                                 
-                                            
-                                                                                                 
-                                                              
 
-        if recv_mdl == "Barsoukov-Pham-Lee #1":
-                                                                                                                                 
-                          
-                                                 
-                            
-
-                                     
-                                                                                                                                      
-                          
-                                                       
-                            
-
-                                              
-            self.f_data, self.z_data, self.fp_data, self.zp_data = self.dx30_read_data(recv_data)
+        if recv_mdl == "Barsoukov-Pham-Lee_1D":                             
+            self.f_data, self.z_data, self.fp_data, self.zp_data = self.dx30_read_data(recv_data, isFit, freq_range)
             self.calc_func = partial(models.Barsoukov_Pham_Lee, c_case=5)
 
-        elif recv_mdl == "Barsoukov-Pham-Lee #2":
-            self.f_data, self.z_data, self.fp_data, self.zp_data = self.dx30_read_data(recv_data)
+        elif recv_mdl == "Barsoukov-Pham-Lee_2D":
+            self.f_data, self.z_data, self.fp_data, self.zp_data = self.dx30_read_data(recv_data, isFit, freq_range)
             self.calc_func = partial(models.Barsoukov_Pham_Lee, c_case=6)
 
-        elif recv_mdl == "Barsoukov-Pham-Lee #3":
-            self.f_data, self.z_data, self.fp_data, self.zp_data = self.dx30_read_data(recv_data)
+        elif recv_mdl == "Barsoukov-Pham-Lee_3D":
+            self.f_data, self.z_data, self.fp_data, self.zp_data = self.dx30_read_data(recv_data, isFit, freq_range)
             self.calc_func = partial(models.Barsoukov_Pham_Lee, c_case=7)
         else:
             print("Undefined MDL!")
-
-                                                    
-                                                                                                 
-                                                                        
-
-                                                         
-                                                                                                 
-                                                                        
-
-                                                        
-                                                                                                 
-                                                                        
-
-                                                                 
-                                                                                                 
-                                                                        
-
-                                                                   
-                                                                                                 
-                                                                        
-
-                                                                  
-                                                                                                 
-                                                                        
-
-                                                                           
-                                                                                                 
-                                                                         
-
-                                
-                                                                                                 
-                                                  
-
                                    
-                                                                                                 
-                                                     
         # Run fitting/simulation
         self.runFittingSimulation = isFit
 
@@ -854,24 +803,49 @@ class FittingImpedance(QObject):
 
         return ret, ret_error, ret_error_percent
 
-    def dx30_read_data(self, dataPath):
+    def dx30_read_data(self, dataPath, isFit=1, freq_range=None):
         """
         Load dx30 data from dataPath
         :param dataPath:
         :return:
         """
-        df = pd.read_csv(dataPath, sep="\t", header=None).values
-        f_data = df[:, 0]
-        z_data = df[:, 1] + 1j * df[:, 2]
+        print(freq_range, type(freq_range[0]), type(freq_range[1]), type(freq_range[2]))
+        try:
+            df = pd.read_csv(dataPath, sep="\t", header=None).values
+            f_data = df[:, 0]
+            z_data = df[:, 1] + 1j * df[:, 2]
+        except:
+            f_data = []
+            z_data = None
 
-        # Keep data with imag < 0
-        if self.rm_positive:
-            kp_data = (df[:, 2] < 0)
-            fp_data = f_data[kp_data]
-            zp_data = z_data[kp_data]
+        if isFit == 1 or int(freq_range[2]) == 0:
+            # Keep data with imag < 0
+            if self.rm_positive:
+                kp_data = (df[:, 2] < 0)
+                fp_data = f_data[kp_data]
+                zp_data = z_data[kp_data]
+            else:
+                fp_data = f_data.copy()
+                zp_data = z_data.copy()
         else:
+            # Generate freqs
+            min_freq = float(freq_range[0])
+            max_freq = float(freq_range[1])
+            n_per_decades = int(freq_range[2])
+
+            n_decade = np.log10(max_freq) - np.log10(min_freq)
+            npoints = int(n_decade) * n_per_decades
+            f_data = np.logspace(np.log10(max_freq), np.log10(min_freq), num=npoints, endpoint=True, base=10)
+            
+            print("Freqs: ", f_data)
             fp_data = f_data.copy()
+            z_data = np.zeros(fp_data.shape, dtype=np.complex)
             zp_data = z_data.copy()
+            # if z_data is None:
+            #     z_data = np.zeros(fp_data.shape, dtype=np.complex)
+            #     zp_data = z_data.copy()
+            # else:
+            #     zp_data = z_data.copy()
 
         return f_data, z_data, fp_data, zp_data
 
