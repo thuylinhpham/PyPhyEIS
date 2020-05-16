@@ -13,11 +13,11 @@ mpmath.mp.dps = 16
 np.random.seed(211)
 random.seed(211)
 
-def diffcylim(w, Rd, Cd):
-    """ diffcylim Rd Cd """
-    ret_sqrt = np.sqrt(Rd * np.multiply(1j*w, Cd))
+def diffcylim(w, R_d, Cd):
+    """ diffcylim R_d Cd """
+    ret_sqrt = np.sqrt(R_d * np.multiply(1j*w, Cd))
 
-    ret_mp = [Rd * mpmath.besseli(0, x) /  (x * mpmath.besseli(1, x)) for x in ret_sqrt]
+    ret_mp = [R_d * mpmath.besseli(0, x) /  (x * mpmath.besseli(1, x)) for x in ret_sqrt]
     
     z_ret = np.array(ret_mp, dtype=np.complex128)
     return z_ret
@@ -29,9 +29,9 @@ def Barsoukov_Pham_Lee_1(parvals, f):
 
     omegas = 2 * np.pi * np.array(f)
 
-    Rm = parvals['rm']
-    Rct = parvals['rct']
-    Rd = parvals['rd']
+    R_m = parvals['r_m']
+    R_ct = parvals['r_ct']
+    R_d = parvals['r_d']
 
     R_i = parvals["r_i"]
     C_dl = parvals["c_dl"]
@@ -58,13 +58,13 @@ def Barsoukov_Pham_Lee_1(parvals, f):
     Cstar_dl = Cdl_C0 + Cdl_HNC / ((1 + (1j * omegas * Cdl_HNT) ** Cdl_HNU) ** Cdl_HNP)
     Cstar_B = CPE_B_T * ((1j * omegas) ** (CPE_B_P - 1))
 
-    Zd_numerator = np.sqrt(Rd / (1j*np.multiply(omegas, Cstar_d)))
-    Zd_denominator = np.tanh(np.sqrt(Rd*1j * np.multiply(omegas, Cstar_d)))
+    Zd_numerator = np.sqrt(R_d / (1j*np.multiply(omegas, Cstar_d)))
+    Zd_denominator = np.tanh(np.sqrt(R_d*1j * np.multiply(omegas, Cstar_d)))
 
     Zd = np.divide(Zd_numerator, Zd_denominator)
 
-    Zs = Rm
-    Y_P = (1j * omegas * Cstar_dl) + 1.0 / (Rct + Zd)
+    Zs = R_m
+    Y_P = (1j * omegas * Cstar_dl) + 1.0 / (R_ct + Zd)
     Z_B = 1.0 / (1j * omegas * Cstar_B)
 
     Z = (1 + Z_B * np.sqrt(Y_P / Zs) * (1.0 / np.tanh(np.sqrt(Zs * Y_P)))) / (
@@ -79,9 +79,9 @@ def Barsoukov_Pham_Lee_2(parvals, f):
     #co factor 2trong Cd, 2 trong Ci
     omegas = 2 * np.pi * np.array(f)
 
-    Rm = parvals['rm']
-    Rct = parvals['rct']
-    Rd = parvals['rd']
+    R_m = parvals['r_m']
+    R_ct = parvals['r_ct']
+    R_d = parvals['r_d']
 
     R_i = parvals["r_i"]
     C_dl = parvals["c_dl"]
@@ -108,10 +108,10 @@ def Barsoukov_Pham_Lee_2(parvals, f):
     Cstar_dl = Cdl_C0 + Cdl_HNC / ((1 + (1j * omegas * Cdl_HNT) ** Cdl_HNU) ** Cdl_HNP)
     Cstar_B = CPE_B_T * ((1j * omegas) ** (CPE_B_P - 1))
 
-    Zd = diffcylim(omegas, Rd, Cstar_d)
+    Zd = diffcylim(omegas, R_d, Cstar_d)
 
-    Zs = Rm
-    Y_P = (1j * omegas * Cstar_dl) + 1.0 / (Rct + Zd)
+    Zs = R_m
+    Y_P = (1j * omegas * Cstar_dl) + 1.0 / (R_ct + Zd)
     Z_B = 1.0 / (1j * omegas * Cstar_B)
 
     Z = (1 + Z_B * np.sqrt(Y_P / Zs) * (1.0 / np.tanh(np.sqrt(Zs * Y_P)))) / (
@@ -126,9 +126,9 @@ def Barsoukov_Pham_Lee_3(parvals, f):
     #co factor 3 trong Cd, 3 trong Ci
     omegas = 2 * np.pi * np.array(f)
 
-    Rm = parvals['rm']
-    Rct = parvals['rct']
-    Rd = parvals['rd']
+    R_m = parvals['r_m']
+    R_ct = parvals['r_ct']
+    R_d = parvals['r_d']
 
     R_i = parvals["r_i"]
     C_dl = parvals["c_dl"]
@@ -155,15 +155,15 @@ def Barsoukov_Pham_Lee_3(parvals, f):
     Cstar_dl = Cdl_C0 + Cdl_HNC / ((1 + (1j * omegas * Cdl_HNT) ** Cdl_HNU) ** Cdl_HNP)
     Cstar_B = CPE_B_T * ((1j * omegas) ** (CPE_B_P - 1))
 
-    tanh_sqrt = np.sqrt(Rd * (1j * omegas * Cstar_d))
+    tanh_sqrt = np.sqrt(R_d * (1j * omegas * Cstar_d))
     tanh_values = (1+0j)*np.ones(tanh_sqrt.shape, dtype=np.complex64)
     tanh_values[np.real(tanh_sqrt) < 100] = np.tanh(tanh_sqrt[np.real(tanh_sqrt) < 100])
 
     Zd = tanh_values / (
-           np.sqrt(1j * omegas * Cstar_d / Rd) - (1 / Rd) * tanh_values)
+           np.sqrt(1j * omegas * Cstar_d / R_d) - (1 / R_d) * tanh_values)
 
-    Zs = Rm
-    Y_P = (1j * omegas * Cstar_dl) + 1.0 / (Rct + Zd)
+    Zs = R_m
+    Y_P = (1j * omegas * Cstar_dl) + 1.0 / (R_ct + Zd)
     Z_B = 1.0 / (1j * omegas * Cstar_B)
 
     Z = (1 + Z_B * np.sqrt(Y_P / Zs) * (1.0 / np.tanh(np.sqrt(Zs * Y_P)))) / (

@@ -234,17 +234,29 @@ class RunFitting(QThread):
 
         if np.sum(np.abs(np.real(self.z_data))) == 0:
             visible_only = 'legendonly'
+            fit_sim_mode = 'lines+markers'
+            r_legend = False
         else:
             visible_only = None
+            fit_sim_mode = 'lines'
+            r_legend = True
 
+        if self.isFit == 2:
+            lg_name = 'Simulation'
+        else:
+            lg_name = 'Fit'
+            r_legend = True
+        
         if self.model_type == 1:
-            fitColor = '#008000'
+            fitColor = '#bfbdb8'
             rawColor = '#FF0000'
             markerColor = '#0000FF'
-            iFit = go.Scatter(x=np.real(self.zf), y=np.imag(self.zf), mode='lines', name='Fit',
-                              line=dict(color=fitColor))
+            simMarkerColor = '#000000'
+            
+            iFit = go.Scatter(x=np.real(self.zf), y=np.imag(self.zf), mode=fit_sim_mode, name=lg_name,
+                              line=dict(color=fitColor), marker=dict(color=simMarkerColor, size=5))
             iRaw = go.Scatter(x=np.real(self.z_data), y=np.imag(self.z_data), mode='lines+markers', name='Raw',
-                              line=dict(color=rawColor), marker=dict(color=markerColor, size=5), visible=visible_only)
+                              line=dict(color=rawColor), marker=dict(color=markerColor, size=5), visible=visible_only, showlegend=r_legend)
 
             iAdmitFit, iCapacFit, iCapacFit_abs, iAdmitRaw, iCapacRaw, iCapacRaw_abs = self.calc_admittance_capacitance(visible_only)
 
@@ -302,7 +314,7 @@ class RunFitting(QThread):
                 cur_zf = self.zf[cur_idx]
                 cur_zraw = self.z_data[cur_idx]
 
-                cur_fit = go.Scatter(x=np.real(cur_zf), y=np.imag(cur_zf), mode='lines', name=key)
+                cur_fit = go.Scatter(x=np.real(cur_zf), y=np.imag(cur_zf), mode=fit_sim_mode, name=key)
                 cur_fit_admit = go.Scatter(x=cur_f, y=self.get_admittance(cur_zf), mode='lines+markers', name=key)
                 cur_fit_capac = go.Scatter(x=cur_f, y=self.get_capacitance(cur_f, cur_zf), mode='lines+markers',
                                            name=key)
@@ -396,9 +408,23 @@ class RunFitting(QThread):
         """
         Emit Admittance
         """
-        fitColor = '#008000'
+        fitColor = '#bfbdb8'
         rawColor = '#FF0000'
         markerColor = '#0000FF'
+        simMarkerColor = '#000000'
+
+        if visible_only is not None:
+            fit_sim_mode = 'lines+markers'
+            r_legend = False
+        else:
+            fit_sim_mode = 'lines'
+            r_legend = True
+
+        if self.isFit == 2:
+            lg_name = 'Simulation'
+        else:
+            lg_name = 'Fit'
+            r_legend = True
 
         cur_real = np.real(self.zp_data)
         cur_im = np.imag(self.zp_data)
@@ -407,16 +433,14 @@ class RunFitting(QThread):
         raw_Capa = -1 * np.divide(np.divide(cur_im, np.power(cur_im, 2.0) + np.power(cur_real, 2.0)) / 2 / np.pi,
                                   root_data)
         
-        raw_Admit = np.divide(cur_real, np.power(cur_real, 2.0) + np.power(cur_im, 2.0))
-
- 
+        raw_Admit = np.divide(cur_real, np.power(cur_real, 2.0) + np.power(cur_im, 2.0))           
         
         iAdmitRaw = go.Scatter(x=root_data, y=raw_Admit, mode='lines+markers', name='Raw', line=dict(color=rawColor),
-                               marker=dict(color=markerColor, size=5), visible=visible_only)
+                               marker=dict(color=markerColor, size=5), visible=visible_only, showlegend=r_legend)
         iCapacRaw = go.Scatter(x=root_data, y=raw_Capa, mode='lines+markers', name='Raw', line=dict(color=rawColor),
-                               marker=dict(color=markerColor, size=5), visible=visible_only)
+                               marker=dict(color=markerColor, size=5), visible=visible_only, showlegend=r_legend)
         iCapacRaw_abs = go.Scatter(x=root_data, y=np.abs(raw_Capa), mode='lines+markers', name='Raw', line=dict(color=rawColor),
-                               marker=dict(color=markerColor, size=5), visible=visible_only)
+                               marker=dict(color=markerColor, size=5), visible=visible_only, showlegend=r_legend)
                                
         cur_real = np.real(self.zf)
         cur_im = np.imag(self.zf)
@@ -424,14 +448,10 @@ class RunFitting(QThread):
         ret_Capa = -1 * np.divide(np.divide(cur_im, np.power(cur_im, 2.0) + np.power(cur_real, 2.0)) / 2 / np.pi,
                                   root_data)
         ret_Admit = np.divide(cur_real, np.power(cur_real, 2.0) + np.power(cur_im, 2.0))
-
         
-        
-        
-        
-        iAdmitFit = go.Scatter(x=root_data, y=ret_Admit, mode='lines', name='Fit', line=dict(color=fitColor))
-        iCapacFit = go.Scatter(x=root_data, y=ret_Capa, mode='lines', name='Fit', line=dict(color=fitColor))
-        iCapacFit_abs = go.Scatter(x=root_data, y=np.abs(ret_Capa), mode='lines', name='Fit', line=dict(color=fitColor))
+        iAdmitFit = go.Scatter(x=root_data, y=ret_Admit, mode=fit_sim_mode, name=lg_name, line=dict(color=fitColor), marker=dict(color=simMarkerColor, size=5))
+        iCapacFit = go.Scatter(x=root_data, y=ret_Capa, mode=fit_sim_mode, name=lg_name, line=dict(color=fitColor), marker=dict(color=simMarkerColor, size=5))
+        iCapacFit_abs = go.Scatter(x=root_data, y=np.abs(ret_Capa), mode=fit_sim_mode, name=lg_name, line=dict(color=fitColor), marker=dict(color=simMarkerColor, size=5))
 
         return iAdmitFit, iCapacFit, iCapacFit_abs, iAdmitRaw, iCapacRaw, iCapacRaw_abs
 
@@ -837,7 +857,6 @@ class FittingImpedance(QObject):
             npoints = int(n_decade) * n_per_decades
             f_data = np.logspace(np.log10(max_freq), np.log10(min_freq), num=npoints, endpoint=True, base=10)
             
-            print("Freqs: ", f_data)
             fp_data = f_data.copy()
             z_data = np.zeros(fp_data.shape, dtype=np.complex)
             zp_data = z_data.copy()

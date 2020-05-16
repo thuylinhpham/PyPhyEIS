@@ -20,17 +20,17 @@ ApplicationWindow {
     property int lastH: 0
 
     // Barsoukov-Pham-Lee_1D
-    property var barsoukov_Pham_Lee_1_names: ["R_ohm", "Rm", "Rct", "Rd", "R_i", "C_dl", "C_d", "C_i", "Q_W"]
+    property var barsoukov_Pham_Lee_1_names: ["R_ohm", "R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_W"]
     property var barsoukov_Pham_Lee_1_values: ["6.16", "6.24", "13.869", "26.01", "96.9", "3.03e-7", "0.07", "1.032", "0.000336"]
     property var barsoukov_Pham_Lee_1_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1]
 	
     // Barsoukov-Pham-Lee_2D
-    property var barsoukov_Pham_Lee_2_names: ["R_ohm", "Rm", "Rct", "Rd", "R_i", "C_dl", "C_d", "C_i", "Q_W"]
+    property var barsoukov_Pham_Lee_2_names: ["R_ohm", "R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_W"]
     property var barsoukov_Pham_Lee_2_values: ["6.16", "6.24", "6.934", "26.01", "96.9", "6.07e-7", "0.07", "1.032", "0.000336"]
     property var barsoukov_Pham_Lee_2_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1]
 
     // Barsoukov-Pham-Lee_3D
-    property var barsoukov_Pham_Lee_3_names: ["R_ohm", "Rm", "Rct", "Rd", "R_i", "C_dl", "C_d", "C_i", "Q_W"]
+    property var barsoukov_Pham_Lee_3_names: ["R_ohm", "R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_W"]
     property var barsoukov_Pham_Lee_3_values: ["6.16", "6.24", "4.623", "26.01", "96.9", "9.1e-7", "0.07", "1.032", "0.000336"]
     property var barsoukov_Pham_Lee_3_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1]
 
@@ -1078,11 +1078,11 @@ ApplicationWindow {
             // }
 
         }
-        BusyIndicator{
-            id: loading_indicator
-            anchors.centerIn: parent
-            running: graphView.loading === true
-            palette.dark: "blue"
-        }
+        //BusyIndicator{
+        //    id: loading_indicator
+        //    anchors.centerIn: parent
+        //    running: graphView.loading === true
+        //    palette.dark: "blue"
+        //}
     }
 }
