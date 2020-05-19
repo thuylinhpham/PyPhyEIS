@@ -238,7 +238,7 @@ class RunFitting(QThread):
             r_legend = False
         else:
             visible_only = None
-            fit_sim_mode = 'lines'
+            fit_sim_mode = 'lines+markers'
             r_legend = True
 
         if self.isFit == 2:
@@ -248,10 +248,10 @@ class RunFitting(QThread):
             r_legend = True
         
         if self.model_type == 1:
-            fitColor = '#bfbdb8'
+            fitColor = '#9e9b93'
             rawColor = '#FF0000'
             markerColor = '#0000FF'
-            simMarkerColor = '#000000'
+            simMarkerColor = '#1fa33c'
             
             iFit = go.Scatter(x=np.real(self.zf), y=np.imag(self.zf), mode=fit_sim_mode, name=lg_name,
                               line=dict(color=fitColor), marker=dict(color=simMarkerColor, size=5))
@@ -408,16 +408,16 @@ class RunFitting(QThread):
         """
         Emit Admittance
         """
-        fitColor = '#bfbdb8'
+        fitColor = '#9e9b93'
         rawColor = '#FF0000'
         markerColor = '#0000FF'
-        simMarkerColor = '#000000'
+        simMarkerColor = '#1fa33c'
 
         if visible_only is not None:
             fit_sim_mode = 'lines+markers'
             r_legend = False
         else:
-            fit_sim_mode = 'lines'
+            fit_sim_mode = 'lines+markers'
             r_legend = True
 
         if self.isFit == 2:
