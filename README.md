@@ -20,7 +20,7 @@
 
 - To run the code directly in your computer using Python commands, you will need to install Python 3.x software and some other libraries from Scipy. For people who are not familiar with a programming language like Python, an executable file named “PyPhyEIS.exe” was created in order to help you directly use this software. The executable file was tested on Windows 10, but technically, it can be run on any version of Windows.
 - The executable file is available at:
-https://github.com/thuylinhpham/PyPhyEIS/releases/download/v1.0.4/PyPhyEIS-windows-v1.0.4.rar
+https://github.com/thuylinhpham/PyPhyEIS/releases/download/v1.0.5/PyPhyEIS-windows-v1.0.5.rar
 
 - More details please find in the *tutorials* repository.
 
