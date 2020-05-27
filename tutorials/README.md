@@ -4,4 +4,4 @@
 
 - In the *Examples* folder, parameter files as well as simulated data are shown. Impedance data of all different cases is illustrated in each *.png* file.
 
-- The *Tutorials_TLP* pdf file will show you step-by-step how to use PyPhyEIS
+- The *Tutorials_TLP* pdf file will show you step-by-step how to use PyPhyEIS.
