@@ -602,6 +602,19 @@ class FittingImpedance(QObject):
         elif recv_mdl == "Barsoukov-Pham-Lee_3D":
             self.f_data, self.z_data, self.fp_data, self.zp_data = self.dx30_read_data(recv_data, isFit, freq_range)
             self.calc_func = partial(models.Barsoukov_Pham_Lee, c_case=7)
+            
+        if recv_mdl == "Barsoukov-Pham-Lee_1D_Full cell":                             
+            self.f_data, self.z_data, self.fp_data, self.zp_data = self.dx30_read_data(recv_data, isFit, freq_range)
+            self.calc_func = partial(models.Barsoukov_Pham_Lee_1D_Full_cell)
+
+        elif recv_mdl == "Barsoukov-Pham-Lee_2D_Full cell":
+            self.f_data, self.z_data, self.fp_data, self.zp_data = self.dx30_read_data(recv_data, isFit, freq_range)
+            self.calc_func = partial(models.Barsoukov_Pham_Lee_2D_Full_cell)
+
+        elif recv_mdl == "Barsoukov-Pham-Lee_3D_Full cell":
+            self.f_data, self.z_data, self.fp_data, self.zp_data = self.dx30_read_data(recv_data, isFit, freq_range)
+            self.calc_func = partial(models.Barsoukov_Pham_Lee_3D_Full_cell)
+            
         else:
             print("Undefined MDL!")
                                    

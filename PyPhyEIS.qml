@@ -20,20 +20,41 @@ ApplicationWindow {
     property int lastH: 0
 
     // Barsoukov-Pham-Lee_1D
-    property var barsoukov_Pham_Lee_1_names: ["R_ohm", "R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_W"]
-    property var barsoukov_Pham_Lee_1_values: ["6.16", "6.24", "13.869", "26.01", "96.9", "3.03e-7", "0.07", "1.032", "0.000336"]
-    property var barsoukov_Pham_Lee_1_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1]
+    property var barsoukov_Pham_Lee_1_names: ["R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_w", "R_A", "R_B", "R_c_liq", "R_a_liq", "C_d_liq"]
+	property var barsoukov_Pham_Lee_1_disps: ["R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_w", "R_+||", "R_-||", "R_c_liq", "R_a_liq", "C_d_liq"]
+    property var barsoukov_Pham_Lee_1_values: ["6.24", "13.869", "26.01", "96.9", "3.03e-7", "0.07", "1.032", "0.000336", "1e-20", "1e20", "51.9", "6.99", "0.5"]
+    property var barsoukov_Pham_Lee_1_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 	
     // Barsoukov-Pham-Lee_2D
-    property var barsoukov_Pham_Lee_2_names: ["R_ohm", "R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_W"]
-    property var barsoukov_Pham_Lee_2_values: ["6.16", "6.24", "6.934", "26.01", "96.9", "6.07e-7", "0.07", "1.032", "0.000336"]
-    property var barsoukov_Pham_Lee_2_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1]
+    property var barsoukov_Pham_Lee_2_names: ["R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_w", "R_A", "R_B", "R_c_liq", "R_a_liq", "C_d_liq"]
+	property var barsoukov_Pham_Lee_2_disps: ["R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_w", "R_+||", "R_-||", "R_c_liq", "R_a_liq", "C_d_liq"]
+    property var barsoukov_Pham_Lee_2_values: ["6.24", "6.934", "26.01", "96.9", "6.07e-7", "0.07", "1.032", "0.000336", "1e-20", "1e20", "51.9", "6.99", "0.5"]
+    property var barsoukov_Pham_Lee_2_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
     // Barsoukov-Pham-Lee_3D
-    property var barsoukov_Pham_Lee_3_names: ["R_ohm", "R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_W"]
-    property var barsoukov_Pham_Lee_3_values: ["6.16", "6.24", "4.623", "26.01", "96.9", "9.1e-7", "0.07", "1.032", "0.000336"]
-    property var barsoukov_Pham_Lee_3_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1]
+    property var barsoukov_Pham_Lee_3_names: ["R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_w", "R_A", "R_B", "R_c_liq", "R_a_liq", "C_d_liq"]
+	property var barsoukov_Pham_Lee_3_disps: ["R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_w", "R_+||", "R_-||", "R_c_liq", "R_a_liq", "C_d_liq"]
+    property var barsoukov_Pham_Lee_3_values: ["6.24", "4.623", "26.01", "96.9", "9.10e-7", "0.07", "1.032","0.000336", "1e-20", "1e20", "51.9", "6.99", "0.5"]
+    property var barsoukov_Pham_Lee_3_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
+	// Barsoukov-Pham-Lee_1D_full_cell
+    property var barsoukov_Pham_Lee_1_fullcell_names: ["L_str", "R_str", "R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_w", "R_A", "R_B", "R_c_liq", "R_a_liq", "C_d_liq", "R_ct_Li", "C_dl_Li"]
+	property var barsoukov_Pham_Lee_1_fullcell_disps: ["L_str", "R_str", "R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_w", "R_+||", "R_-||", "R_c_liq", "R_a_liq", "C_d_liq", "R_ct_Li", "C_dl_Li"]
+    property var barsoukov_Pham_Lee_1_fullcell_values: ["2.07e-7", "1.184", "6.24", "13.869", "26.01", "96.9", "3.03e-7", "0.07", "1.032", "0.000336", "1e-20", "1e20", "51.9", "6.99", "0.5", "3.854", "0.00013317"]
+    property var barsoukov_Pham_Lee_1_fullcell_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+	
+	// Barsoukov-Pham-Lee_2D_full_cell
+    property var barsoukov_Pham_Lee_2_fullcell_names: ["L_str", "R_str", "R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_w", "R_A", "R_B", "R_c_liq", "R_a_liq", "C_d_liq", "R_ct_Li", "C_dl_Li"]
+	property var barsoukov_Pham_Lee_2_fullcell_disps: ["L_str", "R_str", "R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_w", "R_+||", "R_-||", "R_c_liq", "R_a_liq", "C_d_liq", "R_ct_Li", "C_dl_Li"]
+    property var barsoukov_Pham_Lee_2_fullcell_values: ["2.07e-7", "1.184", "6.24", "6.934", "26.01", "96.9", "6.07e-7", "0.07", "1.032", "0.000336", "1e-20", "1e20", "51.9", "6.99", "0.5", "3.854", "0.00013317"]
+    property var barsoukov_Pham_Lee_2_fullcell_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+	
+	// Barsoukov-Pham-Lee_3D_full_cell
+    property var barsoukov_Pham_Lee_3_fullcell_names: ["L_str", "R_str", "R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_w", "R_A", "R_B", "R_c_liq", "R_a_liq", "C_d_liq", "R_ct_Li", "C_dl_Li"]
+	property var barsoukov_Pham_Lee_3_fullcell_disps: ["L_str", "R_str", "R_m", "R_ct", "R_d", "R_i", "C_dl", "C_d", "C_i", "Q_w", "R_+||", "R_-||", "R_c_liq", "R_a_liq", "C_d_liq", "R_ct_Li", "C_dl_Li"]
+    property var barsoukov_Pham_Lee_3_fullcell_values: ["2.07e-7", "1.184", "6.24", "4.623", "26.01", "96.9", "9.10e-7", "0.07", "1.032", "0.000336", "1e-20", "1e20", "51.9", "6.99", "0.5", "3.854", "0.00013317"]
+    property var barsoukov_Pham_Lee_3_fullcell_fixed: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+	
     property string dialogCreated: ""
 
     property real pressX: 0.0
@@ -71,8 +92,9 @@ ApplicationWindow {
         for (var i = 1; i < gridDialog.children.length; i++) {
             console.log(gridDialog.children[i].children[0].children[0].text.toLowerCase(
                             ))
-            if (gridDialog.children[i].children[0].children[0].text.toLowerCase(
-                        ) + '_val' == val_name) {
+			console.log("Object Information: ", gridDialog.children[i].children[1].children[0].information.toLowerCase(
+                            ))
+            if (gridDialog.children[i].children[1].children[0].information.toLowerCase() + '_val' == val_name) {
                 console.log(ischecked, i)
 
                 if (ischecked) {
@@ -179,7 +201,7 @@ ApplicationWindow {
         console.log(best_params)
         for (var pj = 1; pj < gridDialog.children.length; pj++) {
 			for (var i = 1; i <= param_names.length; i++) {
-				// console.log('CK :', pj, gridDialog.children.length, gridDialog.children[pj].children[0].children[0].text, param_names[i-1])
+				console.log('CK :', pj, gridDialog.children.length, gridDialog.children[pj].children[0].children[0].text, param_names[i-1])
 				if (gridDialog.children[pj].children[0].children[0].text.toLowerCase() === param_names[i-1].toLowerCase())  {
 					gridDialog.children[pj].children[1].children[0].text = best_params[i - 1]
 					gridDialog.children[pj].children[1].children[0].cursorPosition = 0
@@ -213,7 +235,7 @@ ApplicationWindow {
         }
     }
 
-    function createDialogParameters(model_name, param_names, param_values, param_fixed) {
+    function createDialogParameters(model_name, param_names, param_disps, param_values, param_fixed) {
         if (runFit)
             fittingSimulationDialog.title = "Fitting " + model_name
         else
@@ -241,9 +263,9 @@ ApplicationWindow {
             gridDialog.columns = 1
             dialogCreated = model_name
             for (var i = 0; i < param_names.length; i++) {
-                var str_object = 'import QtQuick 2.12; import QtQuick.Controls 2.5; import QtQuick.Layouts 1.2; RowLayout{ spacing: 10; Rectangle {width:50;height:20;color:"transparent"; Text { text:"' + param_names[i] + '";font.pixelSize: 12;anchors.left: parent.left;anchors.bottom:parent.bottom;anchors.right:parent.right;bottomPadding:2; }} Rectangle {width:100;height:20;color: "white";border.color:"black"; TextInput {id:'
+                var str_object = 'import QtQuick 2.12; import QtQuick.Controls 2.5; import QtQuick.Layouts 1.2; RowLayout{ spacing: 10; Rectangle {width:50;height:20;color:"transparent"; Text { text:"' + param_disps[i] + '";font.pixelSize: 12;anchors.left: parent.left;anchors.bottom:parent.bottom;anchors.right:parent.right;bottomPadding:2; }} Rectangle {width:100;height:20;color: "white";border.color:"black"; TextInput {id:'
                         + param_names[i].toLowerCase() + "_val" + '; text: "'
-                        + param_values[i] + '"; readOnly:true; cursorVisible: false; selectionColor: "green";selectByMouse: false;clip: true;font.pixelSize: 12;anchors.left: parent.left;anchors.bottom:parent.bottom;leftPadding: 5;rightPadding:5; bottomPadding:2; width:95}} Switch {id: ' + param_names[i].toLowerCase() + '_fixed; indicator: Rectangle {implicitWidth: 20; implicitHeight: 10; x: parent.leftPadding; y: parent.height / 2 - height / 2; radius: 5; color: parent.checked ? "#17a81a" : "#ffffff"; border.color: parent.checked ? "#17a81a" : "#cccccc"; Rectangle {x: parent.parent.checked ? parent.width - width : 0;width: 10;height: 10;radius: 5;color: parent.parent.down ? "#cccccc" : "#ffffff";border.color: parent.parent.checked ? (parent.parent.down ? "#17a81a" : "#21be2b") : "#999999"}} onToggled:{mainView.switchToggled("' + param_names[i].toLowerCase(
+                        + param_values[i] + '"; property var information: "'+ param_names[i] +'"; readOnly:true; cursorVisible: false; selectionColor: "green";selectByMouse: false;clip: true;font.pixelSize: 12;anchors.left: parent.left;anchors.bottom:parent.bottom;leftPadding: 5;rightPadding:5; bottomPadding:2; width:95}} Switch {id: ' + param_names[i].toLowerCase() + '_fixed; indicator: Rectangle {implicitWidth: 20; implicitHeight: 10; x: parent.leftPadding; y: parent.height / 2 - height / 2; radius: 5; color: parent.checked ? "#17a81a" : "#ffffff"; border.color: parent.checked ? "#17a81a" : "#cccccc"; Rectangle {x: parent.parent.checked ? parent.width - width : 0;width: 10;height: 10;radius: 5;color: parent.parent.down ? "#cccccc" : "#ffffff";border.color: parent.parent.checked ? (parent.parent.down ? "#17a81a" : "#21be2b") : "#999999"}} onToggled:{mainView.switchToggled("' + param_names[i].toLowerCase(
                             ) + '_fixed", checked)}} Rectangle {width:150;height:20;color:"transparent"; Text { text:"' + "" + '";font.pixelSize: 12;clip: true; anchors.left: parent.left;anchors.bottom:parent.bottom;anchors.right:parent.right;bottomPadding:2; }} Rectangle {width:150;height:20;color:"transparent"; Text { text:"' + "" + '";font.pixelSize: 12; clip: true; anchors.left: parent.left;anchors.bottom:parent.bottom;anchors.right:parent.right;bottomPadding:2; }}}'
                 //console.log(str_object)
                 try {
@@ -749,7 +771,7 @@ ApplicationWindow {
                     antialiasing: true
                     implicitWidth: 325
                     flat: false
-                    model: ["Barsoukov-Pham-Lee_1D", "Barsoukov-Pham-Lee_2D", "Barsoukov-Pham-Lee_3D"]
+                    model: ["Barsoukov-Pham-Lee_1D", "Barsoukov-Pham-Lee_2D", "Barsoukov-Pham-Lee_3D", "Barsoukov-Pham-Lee_1D_Full cell", "Barsoukov-Pham-Lee_2D_Full cell", "Barsoukov-Pham-Lee_3D_Full cell"]
                     
                     padding: 0
                     background: Rectangle {
@@ -786,7 +808,22 @@ ApplicationWindow {
                             fileDialog.title = "Please choose data for Barsoukov-Pham-Lee_3D"
                             fileDialog.selectMultiple = false
                             break
+						
+						case "Barsoukov-Pham-Lee_1D_Full cell":
+                            fileDialog.title = "Please choose data for Barsoukov-Pham-Lee_1D_Full cell"
+                            fileDialog.selectMultiple = false
+                            break
 
+                        case "Barsoukov-Pham-Lee_2D_Full cell":
+                            fileDialog.title = "Please choose data for Barsoukov-Pham-Lee_2D_Full cell"
+                            fileDialog.selectMultiple = false
+                            break
+
+                        case "Barsoukov-Pham-Lee_3D_Full cell":
+                            fileDialog.title = "Please choose data for Barsoukov-Pham-Lee_3D_Full cell"
+                            fileDialog.selectMultiple = false
+                            break
+							
                         default:
                             dataMessageDialog.open()
                             break
@@ -845,22 +882,40 @@ ApplicationWindow {
                         
                         case "Barsoukov-Pham-Lee_1D":
                             console.log("Please choose data for Barsoukov-Pham-Lee_1D")
-                            createDialogParameters("Barsoukov-Pham-Lee_1D", barsoukov_Pham_Lee_1_names,
+                            createDialogParameters("Barsoukov-Pham-Lee_1D", barsoukov_Pham_Lee_1_names, barsoukov_Pham_Lee_1_disps,
                                                     barsoukov_Pham_Lee_1_values, barsoukov_Pham_Lee_1_fixed)
                             break
 
                         case "Barsoukov-Pham-Lee_2D":
                             console.log("Please choose data for Barsoukov-Pham-Lee_2D")
-                            createDialogParameters("Barsoukov-Pham-Lee_2D", barsoukov_Pham_Lee_2_names,
+                            createDialogParameters("Barsoukov-Pham-Lee_2D", barsoukov_Pham_Lee_2_names, barsoukov_Pham_Lee_2_disps,
                                                     barsoukov_Pham_Lee_2_values, barsoukov_Pham_Lee_2_fixed)
                             break
 
                         case "Barsoukov-Pham-Lee_3D":
                             console.log("Please choose data for Barsoukov-Pham-Lee_3D")
-                            createDialogParameters("Barsoukov-Pham-Lee_3D", barsoukov_Pham_Lee_3_names,
+                            createDialogParameters("Barsoukov-Pham-Lee_3D", barsoukov_Pham_Lee_3_names, barsoukov_Pham_Lee_3_disps,
                                                     barsoukov_Pham_Lee_3_values, barsoukov_Pham_Lee_3_fixed)
                             break
+						
+						case "Barsoukov-Pham-Lee_1D_Full cell":
+                            console.log("Please choose data for Barsoukov-Pham-Lee_1D_Full cell")
+                            createDialogParameters("Barsoukov-Pham-Lee_1D_Full cell", barsoukov_Pham_Lee_1_fullcell_names, barsoukov_Pham_Lee_1_fullcell_disps,
+                                                    barsoukov_Pham_Lee_1_fullcell_values, barsoukov_Pham_Lee_1_fullcell_fixed)
+                            break
 
+                        case "Barsoukov-Pham-Lee_2D_Full cell":
+                            console.log("Please choose data for Barsoukov-Pham-Lee_2D_Full cell")
+                            createDialogParameters("Barsoukov-Pham-Lee_2D_Full cell", barsoukov_Pham_Lee_2_fullcell_names, barsoukov_Pham_Lee_2_fullcell_disps,
+                                                    barsoukov_Pham_Lee_2_fullcell_values, barsoukov_Pham_Lee_2_fullcell_fixed)
+                            break
+
+                        case "Barsoukov-Pham-Lee_3D_Full cell":
+                            console.log("Please choose data for Barsoukov-Pham-Lee_3D_Full cell")
+                            createDialogParameters("Barsoukov-Pham-Lee_3D_Full cell", barsoukov_Pham_Lee_3_fullcell_names, barsoukov_Pham_Lee_3_fullcell_disps,
+                                                    barsoukov_Pham_Lee_3_fullcell_values, barsoukov_Pham_Lee_3_fullcell_fixed)
+                            break
+							
                         default:
                             console.log("Please select data")
                             break
@@ -895,22 +950,39 @@ ApplicationWindow {
                         
                         case "Barsoukov-Pham-Lee_1D":
                             console.log("Please choose data for Barsoukov-Pham-Lee_1D")
-                            createDialogParameters("Barsoukov-Pham-Lee_1D", barsoukov_Pham_Lee_1_names,
+                            createDialogParameters("Barsoukov-Pham-Lee_1D", barsoukov_Pham_Lee_1_names, barsoukov_Pham_Lee_1_disps,
                                                     barsoukov_Pham_Lee_1_values, barsoukov_Pham_Lee_1_fixed)
                             break
 
                         case "Barsoukov-Pham-Lee_2D":
                             console.log("Please choose data for Barsoukov-Pham-Lee_2D")
-                            createDialogParameters("Barsoukov-Pham-Lee_2D", barsoukov_Pham_Lee_2_names,
+                            createDialogParameters("Barsoukov-Pham-Lee_2D", barsoukov_Pham_Lee_2_names, barsoukov_Pham_Lee_2_disps,
                                                     barsoukov_Pham_Lee_2_values, barsoukov_Pham_Lee_2_fixed)
                             break
 
                         case "Barsoukov-Pham-Lee_3D":
                             console.log("Please choose data for Barsoukov-Pham-Lee_3D")
-                            createDialogParameters("Barsoukov-Pham-Lee_3D", barsoukov_Pham_Lee_3_names,
+                            createDialogParameters("Barsoukov-Pham-Lee_3D", barsoukov_Pham_Lee_3_names, barsoukov_Pham_Lee_3_disps,
                                                     barsoukov_Pham_Lee_3_values, barsoukov_Pham_Lee_3_fixed)
                             break
+						
+						case "Barsoukov-Pham-Lee_1D_Full cell":
+                            console.log("Please choose data for Barsoukov-Pham-Lee_1D_Full cell")
+                            createDialogParameters("Barsoukov-Pham-Lee_1D_Full cell", barsoukov_Pham_Lee_1_fullcell_names, barsoukov_Pham_Lee_1_fullcell_disps,
+                                                    barsoukov_Pham_Lee_1_fullcell_values, barsoukov_Pham_Lee_1_fullcell_fixed)
+                            break
 
+                        case "Barsoukov-Pham-Lee_2D_Full cell":
+                            console.log("Please choose data for Barsoukov-Pham-Lee_2D_Full cell")
+                            createDialogParameters("Barsoukov-Pham-Lee_2D_Full cell", barsoukov_Pham_Lee_2_fullcell_names, barsoukov_Pham_Lee_2_fullcell_disps,
+                                                    barsoukov_Pham_Lee_2_fullcell_values, barsoukov_Pham_Lee_2_fullcell_fixed)
+                            break
+
+                        case "Barsoukov-Pham-Lee_3D_Full cell":
+                            console.log("Please choose data for Barsoukov-Pham-Lee_3D_Full cell")
+                            createDialogParameters("Barsoukov-Pham-Lee_3D_Full cell", barsoukov_Pham_Lee_3_fullcell_names, barsoukov_Pham_Lee_3_fullcell_disps,
+                                                    barsoukov_Pham_Lee_3_fullcell_values, barsoukov_Pham_Lee_3_fullcell_fixed)
+                            break
                         default:
                             console.log("Please select data")
                             break
